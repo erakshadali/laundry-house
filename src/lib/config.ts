@@ -1,12 +1,18 @@
+// Contact details come from environment variables (set them in Vercel > Settings > Environment Variables).
+// NEXT_PUBLIC_* values are baked in at build time, so redeploy after changing them.
+const digits = (s: string) => s.replace(/\D/g, "");
+const PHONE = process.env.NEXT_PUBLIC_PHONE || "+91 00000 00000";
+const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP || "910000000000"; // country code first, digits only
+
 export const BUSINESS = {
   name: "The Laundry House",
   tagline: "Premium laundry & dry cleaning, picked up and delivered.",
-  phone: "+91 00000 00000", // TODO: client phone (shown on the site)
-  phoneRaw: "+910000000000", // TODO: same number for tel: links
-  whatsapp: "910000000000", // TODO: client WhatsApp, country code first, digits only
-  email: "hello@thelaundryhouse.example",
-  address: "[Head office address]",
-  hours: "Mon to Sun, 9 AM to 9 PM",
+  phone: PHONE,
+  phoneRaw: "+" + digits(PHONE),
+  whatsapp: digits(WHATSAPP),
+  email: process.env.NEXT_PUBLIC_EMAIL || "hello@thelaundryhouse.example",
+  address: process.env.NEXT_PUBLIC_ADDRESS || "[Head office address]",
+  hours: process.env.NEXT_PUBLIC_HOURS || "Mon to Sun, 9 AM to 9 PM",
 };
 
 // TODO: replace with the client's real store cities.
