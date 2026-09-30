@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   appleWebApp: { capable: true, title: "Laundry House", statusBarStyle: "default" },
 };
 
-export const viewport: Viewport = { themeColor: "#0F2A5C" };
+export const viewport: Viewport = { themeColor: "#0F2A5C", colorScheme: "light" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

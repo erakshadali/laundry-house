@@ -24,6 +24,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Light only: stops phones that force dark mode from recolouring the site. */
+  color-scheme: light;
 }
 
 body {
