@@ -41,16 +41,16 @@ export default async function Overview() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-3xl font-extrabold tracking-tight">Welcome back</h1>
+        <h1 className="text-2xl font-extrabold tracking-tight md:text-3xl">Welcome back</h1>
         <p className="text-sm text-muted">Here is what is happening at The Laundry House today.</p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2.5 md:gap-4 xl:grid-cols-4">
         {stats.map((s) => (
-          <div key={s.label} className="flex flex-col gap-1 rounded-2xl bg-white p-5 shadow-[0_4px_18px_rgba(10,10,11,0.07)]">
-            <div className="text-sm font-semibold text-muted">{s.label}</div>
-            <div className="text-3xl font-extrabold tracking-tight">{s.value}</div>
-            <div className="text-[13px] font-bold text-[#0F7A55]">{s.note}</div>
+          <div key={s.label} className="flex flex-col gap-0.5 rounded-2xl bg-white p-3.5 shadow-[0_4px_18px_rgba(10,10,11,0.07)] md:gap-1 md:p-5">
+            <div className="text-xs font-semibold text-muted md:text-sm">{s.label}</div>
+            <div className="text-2xl font-extrabold tracking-tight md:text-3xl">{s.value}</div>
+            <div className="text-[11px] font-bold text-[#0F7A55] md:text-[13px]">{s.note}</div>
           </div>
         ))}
       </div>

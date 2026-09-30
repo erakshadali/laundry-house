@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
-import { LayoutDashboard, LogOut, Package, Printer, Tags, Truck } from "lucide-react";
+import { LayoutDashboard, LogOut, Package, Phone, Printer, Tags, Truck } from "lucide-react";
 import { BUSINESS, SLOTS, STATUSES } from "@/lib/config";
 import type { Order, OrderStatus, Service } from "@/lib/types";
 import { cn, formatINR, prettyDate, waLink } from "@/lib/utils";
@@ -25,45 +25,72 @@ export function Sidebar() {
     router.push("/admin/login");
     router.refresh();
   }
+  const isActive = (href: string) => (href === "/admin" ? path === "/admin" : path.startsWith(href));
   return (
-    <aside className="flex shrink-0 flex-col gap-1.5 bg-ink p-4 md:sticky md:top-0 md:h-screen md:w-[248px] md:p-5">
-      <div className="flex items-center gap-3 px-2 pb-4 md:pb-6">
-        <LogoMark className="size-10" />
-        <div className="leading-tight text-white">
-          <div className="font-extrabold">The Laundry House</div>
-          <div className="text-xs font-semibold text-[#A39B88]">Admin</div>
+    <>
+      {/* Phone: slim header on top, app-style tab bar at the bottom */}
+      <header className="sticky top-0 z-40 flex items-center justify-between bg-ink px-4 py-2.5 md:hidden">
+        <div className="flex items-center gap-2.5">
+          <LogoMark className="size-8" />
+          <div className="leading-tight text-white">
+            <div className="text-sm font-extrabold">The Laundry House</div>
+            <div className="text-[10px] font-semibold uppercase tracking-widest text-[#A39B88]">Admin</div>
+          </div>
         </div>
-      </div>
-      <nav className="flex gap-1.5 overflow-x-auto md:flex-col" aria-label="Admin">
+        <div className="flex items-center gap-2">
+          <Link href="/" className="rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold text-white">Site</Link>
+          <button onClick={logout} aria-label="Sign out" className="flex size-9 items-center justify-center rounded-full bg-white/10 text-white">
+            <LogOut className="size-4" aria-hidden />
+          </button>
+        </div>
+      </header>
+      <nav className="fixed inset-x-0 bottom-0 z-50 flex border-t border-line bg-white pb-[env(safe-area-inset-bottom)] shadow-[0_-6px_20px_rgba(15,42,92,0.10)] md:hidden" aria-label="Admin">
         {nav.map(({ href, label, icon: Icon }) => {
-          const active = href === "/admin" ? path === "/admin" : path.startsWith(href);
+          const active = isActive(href);
           return (
-            <Link
-              key={href}
-              href={href}
-              className={cn(
-                "flex shrink-0 items-center gap-3 rounded-xl px-3.5 py-3 text-[15px] font-bold transition",
-                active ? "bg-aqua text-ink" : "text-[#CFC7B6] hover:bg-white/10",
-              )}
-            >
-              <Icon className="size-5" aria-hidden /> {label}
+            <Link key={href} href={href} aria-current={active ? "page" : undefined} className={cn("flex flex-1 flex-col items-center gap-0.5 px-1 py-2 text-[11px] font-semibold", active ? "text-night" : "text-muted")}>
+              <span className={cn("flex h-7 w-12 items-center justify-center rounded-full transition-colors", active && "bg-gold")}>
+                <Icon className="size-5" aria-hidden />
+              </span>
+              {label.split(" ")[0]}
             </Link>
           );
         })}
       </nav>
-      <div className="mt-auto hidden flex-col gap-2 md:flex">
-        <Link href="/" className="rounded-xl px-3.5 py-2 text-sm font-semibold text-[#CFC7B6] hover:bg-white/10">View website</Link>
-        <button onClick={logout} className="flex items-center gap-3 rounded-xl bg-white/[0.07] px-3.5 py-3 text-left text-sm font-bold text-[#CFC7B6] hover:bg-white/15">
-          <LogOut className="size-4" aria-hidden /> Sign out
-        </button>
-      </div>
-    </aside>
+
+      {/* Laptop: sidebar */}
+      <aside className="sticky top-0 hidden h-screen w-[248px] shrink-0 flex-col gap-1.5 bg-ink p-5 md:flex">
+        <div className="flex items-center gap-3 px-2 pb-6">
+          <LogoMark className="size-10" />
+          <div className="leading-tight text-white">
+            <div className="font-extrabold">The Laundry House</div>
+            <div className="text-xs font-semibold text-[#A39B88]">Admin</div>
+          </div>
+        </div>
+        <nav className="flex flex-col gap-1.5" aria-label="Admin sidebar">
+          {nav.map(({ href, label, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              className={cn("flex items-center gap-3 rounded-xl px-3.5 py-3 text-[15px] font-bold transition", isActive(href) ? "bg-aqua text-ink" : "text-[#CFC7B6] hover:bg-white/10")}
+            >
+              <Icon className="size-5" aria-hidden /> {label}
+            </Link>
+          ))}
+        </nav>
+        <div className="mt-auto flex flex-col gap-2">
+          <Link href="/" className="rounded-xl px-3.5 py-2 text-sm font-semibold text-[#CFC7B6] hover:bg-white/10">View website</Link>
+          <button onClick={logout} className="flex items-center gap-3 rounded-xl bg-white/[0.07] px-3.5 py-3 text-left text-sm font-bold text-[#CFC7B6] hover:bg-white/15">
+            <LogOut className="size-4" aria-hidden /> Sign out
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }
-
 export function RevenueChart({ data }: { data: { day: string; revenue: number }[] }) {
   return (
-    <div className="h-40 w-full">
+    <div className="h-32 w-full md:h-40">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 8, right: 0, left: 0, bottom: 0 }}>
           <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: "#55657A" }} />
@@ -137,14 +164,14 @@ export function OrdersTable({ orders: initial, compact = false }: { orders: Orde
         </label>
       )}
       {!compact && (
-        <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter by status">
+        <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 md:mx-0 md:flex-wrap md:px-0" role="tablist" aria-label="Filter by status">
           {[{ id: "all", label: "All" }, ...STATUSES].map((s) => (
             <button
               key={s.id}
               role="tab"
               aria-selected={filter === s.id}
               onClick={() => setFilter(s.id as "all" | OrderStatus)}
-              className={cn("rounded-full px-4 py-2 text-sm font-bold", filter === s.id ? "bg-ink text-white" : "bg-white text-muted hover:bg-line")}
+              className={cn("shrink-0 rounded-full px-4 py-2 text-sm font-bold", filter === s.id ? "bg-ink text-white" : "bg-white text-muted hover:bg-line")}
             >
               {s.label}
             </button>
@@ -152,7 +179,55 @@ export function OrdersTable({ orders: initial, compact = false }: { orders: Orde
         </div>
       )}
       {err && <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{err}</p>}
-      <div className="overflow-x-auto rounded-2xl bg-white shadow-[0_4px_18px_rgba(10,10,11,0.07)]">
+      <div className="flex flex-col gap-2.5 md:hidden">
+        {shown.length === 0 && <p className="rounded-2xl bg-white p-6 text-center text-sm text-muted">No orders here yet.</p>}
+        {shown.map((o) => (
+          <article key={o.id} className="flex flex-col gap-2 rounded-2xl bg-white p-3.5 shadow-sm">
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <div className="text-sm font-extrabold">{o.id} · {o.customer.name}</div>
+                <div className="truncate text-xs text-muted">{o.customer.city} · {o.customer.phone}</div>
+              </div>
+              <div className="text-right text-sm font-extrabold">{formatINR(o.total)}</div>
+            </div>
+            <div className="flex items-center justify-between gap-2 text-xs text-muted">
+              <span>{prettyDate(o.date)} · {SLOTS.find((s) => s.id === o.slotId)?.label}</span>
+              <span>{o.payment === "cod" ? "On delivery" : "Online"}</span>
+            </div>
+            <div className="flex items-center justify-between gap-2">
+              {compact ? (
+                <StatusPill status={o.status} />
+              ) : (
+                <select
+                  aria-label={`Status for ${o.id}`}
+                  value={o.status}
+                  disabled={busy === o.id}
+                  onChange={(e) => setStatus(o.id, e.target.value as OrderStatus)}
+                  className={cn("rounded-full border-0 px-3 py-2 text-xs font-extrabold", statusStyle[o.status])}
+                >
+                  {STATUSES.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
+                </select>
+              )}
+              {!compact && (
+                <span className="flex gap-2">
+                  <a href={`tel:+91${o.customer.phone}`} aria-label={`Call ${o.customer.name}`} className="flex size-9 items-center justify-center rounded-full bg-night text-white">
+                    <Phone className="size-4" aria-hidden />
+                  </a>
+                  <a
+                    href={waLink(`Hi ${o.customer.name}, ${waText[o.status]}. Order ${o.id} - ${BUSINESS.name}.`, "91" + o.customer.phone)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full bg-[#25D366] px-4 py-2 text-xs font-extrabold text-white"
+                  >
+                    WhatsApp
+                  </a>
+                </span>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+      <div className="hidden overflow-x-auto rounded-2xl bg-white shadow-[0_4px_18px_rgba(10,10,11,0.07)] md:block">
         <table className="w-full min-w-[720px] text-left text-sm">
           <thead>
             <tr className="border-b border-line text-xs font-extrabold text-muted">
