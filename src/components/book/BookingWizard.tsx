@@ -158,8 +158,8 @@ export function BookingWizard({
   }
 
   return (
-    <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[190px_1fr_320px]">
-      <ol className="flex gap-3 overflow-x-auto lg:flex-col lg:gap-6" aria-label="Steps">
+    <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-6 xl:grid-cols-[190px_minmax(0,1fr)_320px] xl:gap-8">
+      <ol className="flex min-w-0 gap-4 overflow-x-auto pb-1 xl:flex-col xl:gap-6 xl:overflow-visible" aria-label="Steps">
         {STEPS.map((label, i) => (
           <li key={label} className="flex shrink-0 items-center gap-3" aria-current={i === step ? "step" : undefined}>
             <span
@@ -177,7 +177,7 @@ export function BookingWizard({
         ))}
       </ol>
 
-      <div className="flex min-h-[520px] flex-col gap-6 rounded-3xl bg-white p-6 shadow-[0_6px_24px_rgba(10,10,11,0.07)] md:p-8">
+      <div className="flex min-h-[520px] min-w-0 flex-col gap-6 rounded-3xl bg-white p-4 shadow-[0_6px_24px_rgba(10,10,11,0.07)] sm:p-6 md:p-8">
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
@@ -205,7 +205,7 @@ export function BookingWizard({
                           <ServiceIcon name={s.category} className="size-6" />
                         </span>
                         <div className="min-w-0 flex-1">
-                          <div className="truncate font-extrabold">{s.name}</div>
+                          <div className="text-[15px] font-bold leading-snug">{s.name}</div>
                           <div className="whitespace-nowrap text-sm text-muted">{formatINR(s.price)} / {s.unit}</div>
                         </div>
                         <div className="flex items-center gap-2">
@@ -334,7 +334,7 @@ export function BookingWizard({
         </div>
       </div>
 
-      <aside className="flex h-fit flex-col gap-4 rounded-3xl bg-ink p-7 text-white lg:sticky lg:top-24">
+      <aside className="flex h-fit flex-col gap-4 rounded-3xl bg-ink p-7 text-white xl:sticky xl:top-24">
         <div className="text-lg font-extrabold">Your order</div>
         {lines.length === 0 && <p className="text-sm text-[#CFC7B6]">Nothing added yet.</p>}
         {lines.map((l) => (

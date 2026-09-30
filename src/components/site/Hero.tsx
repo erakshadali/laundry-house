@@ -16,22 +16,22 @@ export function Hero({ videoSrc }: { videoSrc: string | null }) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-ivory to-white">
       <div className="absolute -right-40 -top-40 size-[560px] rounded-full bg-gold/30 blur-3xl" aria-hidden />
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 py-16 md:px-8 md:py-24 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="flex flex-col gap-6">
+      <div className="relative mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] items-center gap-12 px-5 py-12 md:px-8 md:py-24 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="flex min-w-0 flex-col gap-6">
           <motion.div {...item(0)} className="w-fit rounded-full bg-white px-4 py-2 text-sm font-semibold text-night shadow-sm">
             <span className="mr-2 inline-block size-2 rounded-full bg-gold align-middle" />
             India&apos;s fastest growing garment care service
           </motion.div>
-          <motion.h1 {...item(1)} className="text-[2.5rem] font-extrabold leading-[1.08] text-night md:text-6xl">
+          <motion.h1 {...item(1)} className="text-[2.15rem] font-extrabold leading-[1.1] text-night sm:text-5xl md:text-6xl">
             Premium Laundry &amp; Dry Cleaning,{" "}
-            <span className="relative inline-block whitespace-nowrap">
+            <span className="relative inline md:inline-block md:whitespace-nowrap">
               <span className="relative z-10">Picked Up &amp; Delivered</span>
               <motion.span
                 aria-hidden
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.8, delay: 0.9, ease: "easeOut" }}
-                className="absolute inset-x-0 bottom-1 z-0 h-3 origin-left bg-gold md:bottom-2 md:h-4"
+                className="absolute inset-x-0 bottom-1 z-0 hidden h-3 origin-left bg-gold md:bottom-2 md:block md:h-4"
               />
             </span>
           </motion.h1>
@@ -71,7 +71,7 @@ export function Hero({ videoSrc }: { videoSrc: string | null }) {
               <Image src="/images/hero.jpg" alt="Neatly folded, freshly cleaned clothes" fill priority sizes="(min-width: 1024px) 480px, 90vw" className="object-cover" style={{ objectPosition: "45% 50%" }} />
             )}
           </div>
-          <div className="floaty absolute -left-4 bottom-10 flex items-center gap-3 rounded-2xl bg-white p-4 shadow-xl md:-left-10">
+          <div className="floaty absolute bottom-6 left-3 flex items-center gap-3 rounded-2xl bg-white p-3 shadow-xl sm:bottom-10 md:-left-10 md:p-4">
             <span className="flex size-11 items-center justify-center rounded-xl bg-gold text-night">
               <Truck className="size-5" aria-hidden />
             </span>
@@ -80,8 +80,8 @@ export function Hero({ videoSrc }: { videoSrc: string | null }) {
               <div className="text-xs text-muted">At your chosen time slot</div>
             </div>
           </div>
-          <div className="floaty-slow absolute -right-3 top-8 rounded-2xl bg-night p-4 text-white shadow-xl md:-right-8">
-            <div className="text-2xl font-extrabold leading-none text-gold">9 AM – 8 PM</div>
+          <div className="floaty-slow absolute right-3 top-4 rounded-2xl bg-night p-3 text-white shadow-xl sm:top-8 md:-right-8 md:p-4">
+            <div className="text-xl font-extrabold leading-none text-gold md:text-2xl">9 AM – 8 PM</div>
             <div className="mt-1 text-xs text-white/80">Stores open daily</div>
           </div>
         </motion.div>

@@ -229,7 +229,7 @@ export function ServicesEditor({ services: initial }: { services: Service[] }) {
   return (
     <div className="flex flex-col gap-4">
       <p aria-live="polite" className="min-h-5 text-sm font-semibold text-aqua-dark">{msg}</p>
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-2">
         {services.map((s) => {
           const value = draft[s.id] ?? String(s.price);
           const changed = Number(value) !== s.price;
