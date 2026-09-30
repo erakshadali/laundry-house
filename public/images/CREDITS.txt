@@ -1,0 +1,11 @@
+Stock photos from Pexels (free to use, no attribution required). Placeholders until the client supplies their own photography.
+couture.jpg  - pexels.com/photo/photo-of-a-bride-wearing-red-lehenga-bridal-dress-12411105
+garment.jpg / hero.jpg - pexels.com/photo/linen-clothes-on-clothes-hangers-15923917
+sneakers.jpg - pexels.com/photo/white-sneakers-on-a-shoe-box-9660927
+home.jpg     - pexels.com/photo/spacious-living-room-with-furniture-6782353
+about.jpg    - pexels.com/photo/a-stack-of-folded-clothes-on-the-table-6461392
+drycleaning.jpg - pexels.com/photo/man-steam-ironing-shirt-hanging-from-clothing-rack-10558201
+ironing.jpg     - pexels.com/photo/person-ironing-clothes-5202797
+towels.jpg      - pexels.com/photo/choice-of-towels-in-wicker-basket-19014649
+washfold.jpg    - pexels.com/photo/close-up-photo-of-folded-clothes-4049148
+hero.jpg        - pexels.com/photo/a-person-holding-a-stack-of-neatly-folded-shirts-4440574 (replaced earlier hero)
