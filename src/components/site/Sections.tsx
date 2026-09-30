@@ -30,13 +30,13 @@ export function StatsStrip() {
   ];
   return (
     <section className="bg-night text-white">
-      <div className={`${wrap} grid grid-cols-2 gap-y-8 py-10 md:grid-cols-4`}>
+      <div className={`${wrap} grid grid-cols-4 gap-x-1 py-4 md:gap-y-8 md:py-10`}>
         {stats.map((s) => (
           <div key={s.label} className="text-center">
-            <div className="text-4xl font-extrabold text-gold md:text-5xl">
+            <div className="text-xl font-extrabold text-gold md:text-5xl">
               <Counter to={s.n} suffix={s.s} />
             </div>
-            <div className="mt-1 text-sm text-white/75">{s.label}</div>
+            <div className="mt-0.5 text-[10px] leading-tight text-white/75 md:mt-1 md:text-sm">{s.label}</div>
           </div>
         ))}
       </div>
@@ -51,16 +51,16 @@ export function ServiceCarousel() {
         <Head eyebrow="Our services" title="Everything your wardrobe needs" sub="Pick a service, choose a slot, and we take care of the rest." />
         <Carousel label="Services">
           {CATEGORIES.map((c) => (
-            <Link key={c.id} href={`/book`} className="group relative aspect-[3/4] w-[280px] shrink-0 snap-start overflow-hidden rounded-3xl bg-surface shadow-md md:w-[320px]">
+            <Link key={c.id} href={`/book`} className="group relative h-[270px] w-[74%] shrink-0 snap-start overflow-hidden rounded-2xl bg-surface shadow-md sm:w-[300px] md:aspect-[3/4] md:h-auto md:w-[320px] md:rounded-3xl">
               <Photo src={c.image} alt={c.caption} caption={c.caption} sizes="320px" position={c.pos} className="transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-night via-night/40 to-transparent" aria-hidden />
-              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 p-6 text-white">
-                <span className="flex size-10 items-center justify-center rounded-xl bg-gold text-night">
-                  <ServiceIcon name={c.id} className="size-5" />
+              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1.5 p-4 text-white md:gap-2 md:p-6">
+                <span className="flex size-8 items-center justify-center rounded-lg bg-gold text-night md:size-10 md:rounded-xl">
+                  <ServiceIcon name={c.id} className="size-4 md:size-5" />
                 </span>
-                <h3 className="text-xl font-bold">{c.name}</h3>
-                <p className="text-sm leading-relaxed text-white/80">{c.blurb}</p>
-                <span className="mt-1 flex items-center gap-2 text-sm font-bold text-gold">
+                <h3 className="text-lg font-bold md:text-xl">{c.name}</h3>
+                <p className="line-clamp-2 text-xs leading-relaxed text-white/80 md:line-clamp-none md:text-sm">{c.blurb}</p>
+                <span className="mt-0.5 flex items-center gap-2 text-sm font-bold text-gold md:mt-1">
                   Book now <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
                 </span>
               </div>
@@ -77,13 +77,13 @@ export function HowItWorks() {
     <section id="how" className={`${section} scroll-mt-28 bg-ivory`}>
       <div className={wrap}>
         <Head center eyebrow="How it works" title="Laundry day, sorted in four steps" />
-        <div className="relative grid gap-10 md:grid-cols-4">
+        <div className="relative grid grid-cols-2 gap-2.5 md:grid-cols-4 md:gap-10">
           <div className="absolute left-[12%] right-[12%] top-8 hidden border-t-2 border-dashed border-night/25 md:block" aria-hidden />
           {STEPS.map((s, i) => (
-            <Reveal key={s.title} delay={i * 0.1} className="relative flex flex-col items-center gap-4 text-center">
-              <span className="relative flex size-16 items-center justify-center rounded-full bg-gold text-2xl font-extrabold text-night shadow-lg shadow-gold/40">{i + 1}</span>
-              <h3 className="text-xl font-bold">{s.title}</h3>
-              <p className="text-[15px] leading-relaxed text-muted">{s.text}</p>
+            <Reveal key={s.title} delay={i * 0.1} className="relative flex items-center gap-2.5 rounded-2xl bg-white p-3 shadow-sm md:flex-col md:gap-4 md:bg-transparent md:p-0 md:text-center md:shadow-none">
+              <span className="relative flex size-8 shrink-0 items-center justify-center rounded-full bg-gold text-base font-extrabold text-night shadow-md shadow-gold/40 md:size-16 md:text-2xl md:shadow-lg">{i + 1}</span>
+              <h3 className="text-[13px] font-bold leading-tight md:text-xl">{s.title}</h3>
+              <p className="hidden text-[15px] leading-relaxed text-muted md:block">{s.text}</p>
             </Reveal>
           ))}
         </div>

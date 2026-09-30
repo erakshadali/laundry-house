@@ -63,10 +63,10 @@ export function Carousel({ children, label }: { children: React.ReactNode; label
   const scroll = (dir: number) => ref.current?.scrollBy({ left: dir * 340, behavior: "smooth" });
   return (
     <div className="relative">
-      <div ref={ref} className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 md:-mx-8 md:px-8" role="region" aria-label={label} tabIndex={0}>
+      <div ref={ref} className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 md:-mx-8 md:gap-5 md:px-8 md:pb-4" role="region" aria-label={label} tabIndex={0}>
         {children}
       </div>
-      <div className="mt-6 flex justify-end gap-3">
+      <div className="mt-6 hidden justify-end gap-3 md:flex">
         <button aria-label="Previous" onClick={() => scroll(-1)} className="flex size-12 items-center justify-center rounded-full border-2 border-night text-night transition-colors hover:bg-night hover:text-white">
           <ChevronLeft className="size-5" />
         </button>
