@@ -44,7 +44,7 @@ export function Navbar() {
             <LogoMark />
             <span className="text-lg font-extrabold leading-none text-night md:text-xl">
               The Laundry House
-              <span className="mt-0.5 block text-[10px] font-semibold tracking-[0.25em] text-gold-deep">LAUNDRY · DRY CLEAN · IRON</span>
+              <span className="mt-0.5 hidden text-[10px] font-semibold tracking-[0.25em] text-gold-deep sm:block">LAUNDRY · DRY CLEAN · IRON</span>
             </span>
           </Link>
           <nav className="ml-auto hidden items-center gap-1 lg:flex" aria-label="Main">

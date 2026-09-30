@@ -16,13 +16,13 @@ export function Hero({ videoSrc }: { videoSrc: string | null }) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-ivory to-white">
       <div className="absolute -right-40 -top-40 size-[560px] rounded-full bg-gold/30 blur-3xl" aria-hidden />
-      <div className="relative mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] items-center gap-12 px-5 py-12 md:px-8 md:py-24 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="flex min-w-0 flex-col gap-6">
-          <motion.div {...item(0)} className="w-fit rounded-full bg-white px-4 py-2 text-sm font-semibold text-night shadow-sm">
+      <div className="relative mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] items-center gap-6 px-5 pb-14 pt-6 md:gap-12 md:px-8 md:pb-24 md:pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:pb-28 lg:pt-20">
+        <div className="flex min-w-0 flex-col gap-4 md:gap-6">
+          <motion.div {...item(0)} className="w-fit rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-night shadow-sm md:px-4 md:py-2 md:text-sm">
             <span className="mr-2 inline-block size-2 rounded-full bg-gold align-middle" />
             India&apos;s fastest growing garment care service
           </motion.div>
-          <motion.h1 {...item(1)} className="text-[2.15rem] font-extrabold leading-[1.1] text-night sm:text-5xl md:text-6xl">
+          <motion.h1 {...item(1)} className="text-[1.9rem] font-extrabold leading-[1.12] text-night sm:text-5xl md:text-6xl">
             Premium Laundry &amp; Dry Cleaning,{" "}
             <span className="relative inline md:inline-block md:whitespace-nowrap">
               <span className="relative z-10">Picked Up &amp; Delivered</span>
@@ -35,14 +35,14 @@ export function Hero({ videoSrc }: { videoSrc: string | null }) {
               />
             </span>
           </motion.h1>
-          <motion.p {...item(2)} className="max-w-xl text-lg leading-relaxed text-muted">
+          <motion.p {...item(2)} className="line-clamp-3 max-w-xl text-[15px] leading-relaxed text-muted md:line-clamp-none md:text-lg">
             Dry cleaning, steam press, wedding couture, sneakers and bags, and home fabrics. Doorstep pickup and delivery, handled by fabric specialists.
           </motion.p>
-          <motion.div {...item(3)} className="flex flex-wrap gap-3">
-            <Link href="/book" className="flex items-center gap-2 rounded-xl bg-night px-7 py-4 font-bold text-white shadow-lg shadow-night/20 transition-transform hover:scale-[1.03]">
-              <CalendarCheck className="size-5" aria-hidden /> Schedule Your Pickup
+          <motion.div {...item(3)} className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
+            <Link href="/book" className="flex items-center justify-center gap-2 rounded-xl bg-night px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-night/20 transition-transform hover:scale-[1.03] sm:px-7 sm:py-4 sm:text-base">
+              <CalendarCheck className="hidden size-5 sm:block" aria-hidden /> <span className="sm:hidden">Book Pickup</span><span className="hidden sm:inline">Schedule Your Pickup</span>
             </Link>
-            <Link href="/rates" className="rounded-xl bg-gold px-7 py-4 font-bold text-night shadow-lg shadow-gold/30 transition-transform hover:scale-[1.03]">
+            <Link href="/rates" className="rounded-xl bg-gold px-4 py-3.5 text-center text-sm font-bold text-night shadow-lg shadow-gold/30 transition-transform hover:scale-[1.03] sm:px-7 sm:py-4 sm:text-base">
               See Our Rates
             </Link>
           </motion.div>
@@ -51,18 +51,18 @@ export function Hero({ videoSrc }: { videoSrc: string | null }) {
             href={waLink("Hi! I'd like to book a laundry pickup.")}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex w-fit items-center gap-2 text-sm font-semibold text-night underline-offset-4 hover:underline"
+            className="hidden w-fit items-center gap-2 text-sm font-semibold text-night underline-offset-4 hover:underline sm:flex"
           >
             <MessageCircle className="size-5 text-[#1FA855]" aria-hidden /> Or book instantly on WhatsApp
           </motion.a>
-          <motion.ul {...item(5)} className="mt-2 flex flex-wrap gap-x-8 gap-y-2 text-sm font-medium text-night/80">
+          <motion.ul {...item(5)} className="mt-2 hidden flex-wrap gap-x-8 gap-y-2 text-sm font-medium text-night/80 md:flex">
             <li>✓ Doorstep pickup &amp; delivery</li>
             <li>✓ Fabric-safe cleaning</li>
             <li>✓ 6 stores across Noida</li>
           </motion.ul>
         </div>
 
-        <motion.div initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, delay: 0.25 }} className="relative mx-auto w-full max-w-[520px]">
+        <motion.div initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, delay: 0.25 }} className="relative mx-auto hidden w-full max-w-[520px] lg:block">
           <div className="absolute -inset-3 -rotate-3 rounded-[2.5rem] bg-gold" aria-hidden />
           <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-surface shadow-2xl">
             {videoSrc ? (

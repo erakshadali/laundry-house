@@ -303,7 +303,7 @@ export function Footer() {
 
 export function FloatingActions() {
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-3">
+    <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2.5 md:bottom-5 md:right-5 md:gap-3">
       <a href={`tel:${BUSINESS.phoneRaw}`} aria-label="Call us" className="flex size-12 items-center justify-center rounded-full bg-night text-white shadow-xl transition-transform hover:scale-110">
         <Phone className="size-5" aria-hidden />
       </a>

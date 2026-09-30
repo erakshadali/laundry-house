@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
+import { QuickBook } from "@/components/site/QuickBook";
 import {
   Cities,
   CtaBand,
@@ -15,6 +16,7 @@ import {
   WhyUs,
 } from "@/components/site/Sections";
 import { listServices } from "@/lib/store";
+import { todayIST } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -27,6 +29,7 @@ export default async function Home() {
       <Navbar />
       <main>
         <Hero videoSrc={heroVideo} />
+        <QuickBook services={services} today={todayIST()} />
         <StatsStrip />
         <ServiceCarousel />
         <HowItWorks />
