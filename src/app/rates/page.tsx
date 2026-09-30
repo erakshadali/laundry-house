@@ -20,7 +20,7 @@ export default async function RatesPage() {
           <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-16 md:px-8 md:py-20">
             <span className="w-fit rounded-full bg-gold/30 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em]">Rate list</span>
             <h1 className="max-w-3xl text-4xl font-extrabold md:text-6xl">Simple, transparent pricing</h1>
-            <p className="max-w-2xl text-lg text-muted">Browse by category or search for an item. Pickup and delivery are always free.</p>
+            <p className="max-w-2xl text-lg text-muted">Browse by category or search for an item. Rates are starting prices, exclusive of GST.</p>
           </div>
         </section>
         <section className="bg-white pb-20">

@@ -2,30 +2,42 @@ import { CITIES, SLOTS } from "./config";
 import type { DB, Order, OrderStatus, Service } from "./types";
 import { addDays, todayIST } from "./utils";
 
-/** Sample rate card - the client will provide the real one (editable in the admin). */
-export function seedServices(): Service[] {
-  return [
-    { id: "couture-lehenga", category: "couture", name: "Lehenga / Gown", description: "Specialist clean with preservation box.", price: 1500, unit: "item", active: true },
-    { id: "couture-saree", category: "couture", name: "Silk / Embroidered Saree", description: "Fabric-specific clean and press.", price: 600, unit: "item", active: true },
-    { id: "couture-sherwani", category: "couture", name: "Sherwani / Suit Set", description: "Dry clean, steam and garment bag.", price: 1100, unit: "item", active: true },
-    { id: "wash-fold", category: "wash", name: "Wash & Fold", description: "Everyday laundry, priced per kg.", price: 110, unit: "kg", active: true },
-    { id: "wash-iron", category: "wash", name: "Wash & Iron", description: "Washed, dried and steam pressed, per kg.", price: 149, unit: "kg", active: true },
-    { id: "wash-bedding", category: "wash", name: "Bedsheet / Blanket", description: "Deep wash and dry.", price: 199, unit: "item", active: true },
-    { id: "dc-shirt", category: "dryclean", name: "Shirt / Kurta", description: "Dry clean, pressed and hung.", price: 120, unit: "item", active: true },
-    { id: "dc-trouser", category: "dryclean", name: "Trousers / Jeans", description: "Dry clean and press.", price: 120, unit: "item", active: true },
-    { id: "dc-suit", category: "dryclean", name: "Suit (2 piece)", description: "Dry clean, steam and finish.", price: 500, unit: "item", active: true },
-    { id: "dc-saree", category: "dryclean", name: "Saree (plain)", description: "Dry clean and fold.", price: 350, unit: "item", active: true },
-    { id: "iron-shirt", category: "iron", name: "Shirt / Trousers", description: "Steam press on a hanger.", price: 25, unit: "item", active: true },
-    { id: "iron-saree", category: "iron", name: "Saree Press", description: "Steam press and fold.", price: 120, unit: "item", active: true },
-    { id: "iron-suit", category: "iron", name: "Suit Press", description: "Steam press, 2 piece.", price: 150, unit: "item", active: true },
-    { id: "shoe-sneaker", category: "sneakers", name: "Sneaker Deep Clean", description: "Deep clean and conditioning.", price: 599, unit: "item", active: true },
-    { id: "shoe-bag", category: "sneakers", name: "Handbag Restoration", description: "Clean, condition and restore leather.", price: 1199, unit: "item", active: true },
-    { id: "home-curtain", category: "home", name: "Curtains (per panel)", description: "Deep clean and steam finish.", price: 350, unit: "item", active: true },
-    { id: "home-sofa", category: "home", name: "Sofa (per seat)", description: "Upholstery shampoo and dry.", price: 450, unit: "item", active: true },
-    { id: "home-car", category: "home", name: "Car Interior Detailing", description: "Seats, mats and interior deep clean.", price: 2499, unit: "item", active: true },
-  ];
-}
+/**
+ * Noida rate card from thelaundryhouseindia.com/stores (starting prices, exclusive of GST).
+ * [item, starting price (dry clean), steam press price]. Editable in the admin.
+ */
+const GARMENT_RATES: [string, number, number][] = [
+  ["Undershirt / Tie", 100, 50],
+  ["Bikini / Swimming Costume / Shorts", 100, 50],
+  ["Scarf / Stocking", 100, 50],
+  ["Shirt / T-Shirt", 125, 65],
+  ["Dupatta / Blouse", 125, 65],
+  ["Pants / Jeans / Slacks / Salwar", 150, 75],
+  ["Dhoti / Pyjama / Capri", 150, 75],
+  ["Sweat Shirt / Sweat Pants", 200, 100],
+  ["Brassiere / Dress / Half Jacket", 200, 100],
+  ["Bath Robe", 200, 75],
+  ["Kameez / Skirt / Kurta", 200, 100],
+  ["Saree", 225, 100],
+  ["Pullover / Cardigan", 275, 140],
+  ["Sports Jacket / Jumper / Dangree / Shawl", 300, 150],
+  ["Blazer / Jacket", 300, 150],
+  ["Sports Jacket / Coat", 300, 150],
+  ["Dress (Long)", 350, 175],
+  ["Overcoat / Long Coat", 400, 200],
+];
+const COUTURE_RATES: [string, number, number][] = [["Wedding Dress (Bari)", 999, 399]];
 
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+export function seedServices(): Service[] {
+  const make = (category: string, rows: [string, number, number][]): Service[] =>
+    rows.flatMap(([name, dc, sp]) => [
+      { id: `${category}-${slug(name)}-dc`, category, name: `${name} (Dry clean)`, description: "Starting price, exclusive of GST.", price: dc, unit: "item" as const, active: true },
+      { id: `${category}-${slug(name)}-sp`, category, name: `${name} (Steam press)`, description: "Finishing only, exclusive of GST.", price: sp, unit: "item" as const, active: true },
+    ]);
+  return [...make("garment", GARMENT_RATES), ...make("couture", COUTURE_RATES)];
+}
 /** Made-up orders so the local demo dashboard is not empty. Never used in production. */
 export function seed(): DB {
   const services = seedServices();

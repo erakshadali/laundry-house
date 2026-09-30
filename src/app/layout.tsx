@@ -11,9 +11,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "The Laundry House | Laundry & Dry Cleaning with Free Pickup & Delivery",
+  title: "The Laundry House | Premium Laundry & Dry Cleaning in Noida",
   description:
-    "Premium laundry, dry cleaning, ironing, wedding wear and sneaker care with free doorstep pickup and delivery. Book online or on WhatsApp.",
+    "Premium garment care in Noida: dry cleaning, steam press, wedding couture, sneakers and bags, home and auto fabrics. Doorstep pickup and delivery. Book online or on WhatsApp.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

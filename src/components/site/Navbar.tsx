@@ -13,7 +13,7 @@ const links = [
   { href: "/services", label: "Services" },
   { href: "/rates", label: "Rates" },
   { href: "/#how", label: "How it works" },
-  { href: "/stores", label: "Cities" },
+  { href: "/stores", label: "Stores" },
   { href: "/track", label: "Track order" },
 ];
 
@@ -27,7 +27,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50">
       <div className="hidden bg-night text-xs text-white md:block">
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-between px-8">
-          <span className="text-white/80">Free pickup &amp; delivery across India · {BUSINESS.hours}</span>
+          <span className="text-white/80">Doorstep pickup &amp; delivery in Noida · {BUSINESS.hours}</span>
           <span className="flex items-center gap-5">
             <a href={`tel:${BUSINESS.phoneRaw}`} className="flex items-center gap-1.5 hover:text-gold">
               <Phone className="size-3.5" aria-hidden /> {BUSINESS.phone}

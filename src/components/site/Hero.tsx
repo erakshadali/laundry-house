@@ -36,7 +36,7 @@ export function Hero({ videoSrc }: { videoSrc: string | null }) {
             </span>
           </motion.h1>
           <motion.p {...item(2)} className="max-w-xl text-lg leading-relaxed text-muted">
-            Wash &amp; fold, dry cleaning, steam pressing, wedding wear and sneaker care. Free doorstep pickup and delivery, back to you in 24 to 48 hours.
+            Dry cleaning, steam press, wedding couture, sneakers and bags, and home fabrics. Doorstep pickup and delivery, handled by fabric specialists.
           </motion.p>
           <motion.div {...item(3)} className="flex flex-wrap gap-3">
             <Link href="/book" className="flex items-center gap-2 rounded-xl bg-night px-7 py-4 font-bold text-white shadow-lg shadow-night/20 transition-transform hover:scale-[1.03]">
@@ -56,9 +56,9 @@ export function Hero({ videoSrc }: { videoSrc: string | null }) {
             <MessageCircle className="size-5 text-[#1FA855]" aria-hidden /> Or book instantly on WhatsApp
           </motion.a>
           <motion.ul {...item(5)} className="mt-2 flex flex-wrap gap-x-8 gap-y-2 text-sm font-medium text-night/80">
-            <li>✓ Free pickup &amp; delivery</li>
+            <li>✓ Doorstep pickup &amp; delivery</li>
             <li>✓ Fabric-safe cleaning</li>
-            <li>✓ 24 to 48 hour turnaround</li>
+            <li>✓ 6 stores across Noida</li>
           </motion.ul>
         </div>
 
@@ -76,13 +76,13 @@ export function Hero({ videoSrc }: { videoSrc: string | null }) {
               <Truck className="size-5" aria-hidden />
             </span>
             <div>
-              <div className="text-sm font-bold">Free pickup</div>
+              <div className="text-sm font-bold">Doorstep pickup</div>
               <div className="text-xs text-muted">At your chosen time slot</div>
             </div>
           </div>
           <div className="floaty-slow absolute -right-3 top-8 rounded-2xl bg-night p-4 text-white shadow-xl md:-right-8">
-            <div className="text-2xl font-extrabold leading-none text-gold">24–48h</div>
-            <div className="mt-1 text-xs text-white/80">Back at your door</div>
+            <div className="text-2xl font-extrabold leading-none text-gold">9 AM – 8 PM</div>
+            <div className="mt-1 text-xs text-white/80">Stores open daily</div>
           </div>
         </motion.div>
       </div>

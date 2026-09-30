@@ -1,9 +1,7 @@
-import { Droplets, Footprints, Gem, Shirt, Sofa, WashingMachine, Wind } from "lucide-react";
+import { Droplets, Footprints, Gem, Shirt, Sofa } from "lucide-react";
 
 const map = {
-  wash: WashingMachine,
-  dryclean: Shirt,
-  iron: Wind,
+  garment: Shirt,
   couture: Gem,
   sneakers: Footprints,
   home: Sofa,

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, BadgeCheck, MapPin, MessageCircle, Phone, Star } from "lucide-react";
-import { BUSINESS, CATEGORIES, CITIES, FAQS, FEATURES, STEPS } from "@/lib/config";
+import { BUSINESS, CATEGORIES, FAQS, FEATURES, REVIEWS, STEPS, STORES } from "@/lib/config";
 import type { Service } from "@/lib/types";
 import { waLink } from "@/lib/utils";
 import { Accordion, Carousel, Counter, RateCard, Reveal } from "./Motion";
@@ -22,10 +22,10 @@ function Head({ eyebrow, title, sub, center = false }: { eyebrow: string; title:
 
 export function StatsStrip() {
   const stats = [
-    { n: 9, s: "", label: "Cities across India" },
-    { n: 6, s: "", label: "Specialist services" },
-    { n: 48, s: "h", label: "Maximum turnaround" },
-    { n: 7, s: "", label: "Days a week" },
+    { n: 6, s: "", label: "Stores across Noida" },
+    { n: 4, s: "", label: "Specialist services" },
+    { n: 10, s: "", label: "Cities across India" },
+    { n: 11, s: "h", label: "Open hours, every day" },
   ];
   return (
     <section className="bg-night text-white">
@@ -95,7 +95,7 @@ export function RatesPreview({ services }: { services: Service[] }) {
   return (
     <section id="rates" className={`${section} scroll-mt-28 bg-white`}>
       <div className={wrap}>
-        <Head eyebrow="Our rates" title="Simple, transparent pricing" sub="Pick a category to see prices. Pickup and delivery are free." />
+        <Head eyebrow="Our rates" title="Simple, transparent pricing" sub="Starting prices per item, exclusive of GST. Pick a category to see the rates." />
         <RateCard services={services} />
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/rates" className="rounded-xl bg-night px-7 py-3.5 font-bold text-white transition-transform hover:scale-[1.03]">
@@ -173,19 +173,22 @@ export function Cities() {
     <section className={`${section} bg-surface`}>
       <div className={`${wrap} grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]`}>
         <Reveal className="flex flex-col gap-5">
-          <span className="w-fit rounded-full bg-gold/25 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em]">Cities</span>
-          <h2 className="text-3xl font-extrabold md:text-5xl">Serving you across India</h2>
-          <p className="text-lg text-muted">Find The Laundry House in {CITIES.length} major cities and growing.</p>
+          <span className="w-fit rounded-full bg-gold/25 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em]">Our stores</span>
+          <h2 className="text-3xl font-extrabold md:text-5xl">Six stores across Noida</h2>
+          <p className="text-lg text-muted">Pick your nearest store for pickup, or walk in. Open every day, 9:00 am to 8:00 pm.</p>
           <Link href="/stores" className="w-fit rounded-xl bg-night px-7 py-3.5 font-bold text-white transition-transform hover:scale-[1.03]">
-            View all cities
+            View store details
           </Link>
         </Reveal>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {CITIES.map((c, i) => (
-            <Reveal key={c} delay={i * 0.04}>
-              <Link href={`/book?city=${encodeURIComponent(c)}`} className="group flex items-center gap-3 rounded-2xl border border-line bg-white px-5 py-4 font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:border-gold hover:bg-gold hover:shadow-lg">
-                <MapPin className="size-4 text-gold-deep group-hover:text-night" aria-hidden />
-                {c}
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {STORES.map((s, i) => (
+            <Reveal key={s.id} delay={i * 0.04}>
+              <Link href={`/book?city=${encodeURIComponent(s.name)}`} className="group flex items-start gap-3 rounded-2xl border border-line bg-white px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold hover:shadow-lg">
+                <MapPin className="mt-1 size-4 shrink-0 text-gold-deep" aria-hidden />
+                <span>
+                  <span className="block font-semibold">{s.name}</span>
+                  <span className="block text-sm text-muted">{s.address}</span>
+                </span>
               </Link>
             </Reveal>
           ))}
@@ -196,11 +199,7 @@ export function Cities() {
 }
 
 export function Reviews() {
-  const sample = [
-    { t: "Pickup was on time and my clothes came back perfectly pressed. Very professional service.", w: "Sample customer, Delhi NCR" },
-    { t: "Stains I had given up on were gone. The packaging and delivery were excellent.", w: "Sample customer, Mumbai" },
-    { t: "The monthly convenience is unbeatable. Booking on WhatsApp takes seconds.", w: "Sample customer, Vadodara" },
-  ];
+  const sample = REVIEWS.map((r) => ({ t: r.text, w: r.who }));
   return (
     <section className={`${section} bg-white`}>
       <div className={wrap}>
@@ -220,7 +219,6 @@ export function Reviews() {
             </Reveal>
           ))}
         </div>
-        <p className="mt-6 text-center text-xs text-muted">Sample reviews for the demo. Real customer reviews will replace them.</p>
       </div>
     </section>
   );
@@ -250,7 +248,7 @@ export function CtaBand() {
         <Reveal className="flex flex-col items-start justify-between gap-8 rounded-[2rem] bg-gold p-10 md:flex-row md:items-center md:p-14">
           <div>
             <h2 className="text-3xl font-extrabold text-night md:text-5xl">Ready for fresh, clean clothes?</h2>
-            <p className="mt-2 text-lg text-night/80">Book a free pickup in under a minute.</p>
+            <p className="mt-2 text-lg text-night/80">Book a pickup in under a minute.</p>
           </div>
           <Link href="/book" className="rounded-xl bg-night px-9 py-4 font-bold text-white transition-transform hover:scale-[1.04]">
             Schedule Your Pickup
@@ -269,7 +267,11 @@ export function Footer() {
           <div className="flex items-center gap-3 text-xl font-extrabold text-white">
             <LogoMark /> {BUSINESS.name}
           </div>
-          <p className="mt-4 max-w-xs leading-relaxed">Premium laundry and dry cleaning with free doorstep pickup and delivery across India.</p>
+          <p className="mt-4 max-w-xs leading-relaxed">{BUSINESS.tagline}. Premium laundry and dry cleaning with doorstep pickup and delivery.</p>
+          <div className="mt-5 flex gap-4 text-sm font-semibold">
+            <a href={BUSINESS.instagram} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold">Instagram</a>
+            <a href={BUSINESS.youtube} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold">YouTube</a>
+          </div>
         </div>
         <div className="flex flex-col gap-2 text-sm">
           <div className="mb-1 font-bold text-white">Services</div>
@@ -280,7 +282,7 @@ export function Footer() {
         <div className="flex flex-col gap-2 text-sm">
           <div className="mb-1 font-bold text-white">Quick links</div>
           <Link href="/rates" className="transition-colors hover:text-gold">Rates</Link>
-          <Link href="/stores" className="transition-colors hover:text-gold">Cities</Link>
+          <Link href="/stores" className="transition-colors hover:text-gold">Stores</Link>
           <Link href="/track" className="transition-colors hover:text-gold">Track order</Link>
           <Link href="/book" className="transition-colors hover:text-gold">Book a pickup</Link>
         </div>

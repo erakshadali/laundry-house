@@ -284,7 +284,7 @@ export function BookingWizard({
                   <label className="flex flex-col gap-2 text-sm font-bold text-muted">Mobile number
                     <input className={input} value={phone} onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))} inputMode="numeric" autoComplete="tel" placeholder="10 digit number" />
                   </label>
-                  <label className="flex flex-col gap-2 text-sm font-bold text-muted">City                    <select className={input} value={city} onChange={(e) => setCity(e.target.value)}>
+                  <label className="flex flex-col gap-2 text-sm font-bold text-muted">Nearest store                    <select className={input} value={city} onChange={(e) => setCity(e.target.value)}>
                       {CITIES.map((a) => <option key={a}>{a}</option>)}
                     </select>
                   </label>
@@ -343,7 +343,7 @@ export function BookingWizard({
             <span>{formatINR(l.q * l.s.price)}</span>
           </div>
         ))}
-        <div className="flex justify-between text-[15px] text-[#E2C98F]"><span>Pickup and delivery</span><span>Free</span></div>
+        <div className="flex justify-between text-[15px] text-[#E2C98F]"><span>Doorstep pickup and delivery</span><span>Confirmed on WhatsApp</span></div>
         <div className="h-px bg-white/20" />
         <div className="flex justify-between text-xl font-extrabold"><span>Estimated total</span><span>{formatINR(total)}</span></div>
         <p className="text-xs leading-relaxed text-[#CFC7B6]">Final amount is confirmed after weighing at pickup.</p>

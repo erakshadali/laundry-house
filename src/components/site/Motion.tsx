@@ -178,7 +178,7 @@ export function RateCard({ services, full = false }: { services: Service[]; full
           </motion.ul>
         </AnimatePresence>
       </div>
-      <p className="text-xs text-muted">Sample rates for the demo. Final rates are confirmed after inspection.</p>
+      <p className="text-xs text-muted">Starting prices, exclusive of GST. Designer and bridal apparel is charged based on quality and specific requirements.</p>
     </div>
   );
 }
