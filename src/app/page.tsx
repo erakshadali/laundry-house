@@ -1,5 +1,3 @@
-import fs from "fs";
-import path from "path";
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
 import {
@@ -22,12 +20,13 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const services = await listServices(true);
-  const hasVideo = fs.existsSync(path.join(process.cwd(), "public", "hero.mp4"));
+  // Optional hero video: put the file in /public and set HERO_VIDEO=/hero.mp4 in the environment.
+  const heroVideo = process.env.HERO_VIDEO || null;
   return (
     <>
       <Navbar />
       <main>
-        <Hero videoSrc={hasVideo ? "/hero.mp4" : null} />
+        <Hero videoSrc={heroVideo} />
         <StatsStrip />
         <ServiceCarousel />
         <HowItWorks />

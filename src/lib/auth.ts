@@ -4,7 +4,10 @@ export const COOKIE = "lh_admin";
 export const SESSION_SECONDS = 60 * 60 * 24 * 7;
 
 function secret() {
-  return process.env.AUTH_SECRET || "dev-only-secret-change-me";
+  const s = process.env.AUTH_SECRET;
+  if (s) return s;
+  if (process.env.NODE_ENV === "production") throw new Error("AUTH_SECRET is not set");
+  return "dev-only-secret-change-me";
 }
 
 export function signSession(): string {
@@ -17,7 +20,12 @@ export function verifySession(token?: string): boolean {
   if (!token) return false;
   const [exp, sig] = token.split(".");
   if (!exp || !sig) return false;
-  const expected = createHmac("sha256", secret()).update(exp).digest("base64url");
+  let expected: string;
+  try {
+    expected = createHmac("sha256", secret()).update(exp).digest("base64url");
+  } catch {
+    return false;
+  }
   const a = Buffer.from(sig);
   const b = Buffer.from(expected);
   if (a.length !== b.length || !timingSafeEqual(a, b)) return false;
