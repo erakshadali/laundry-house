@@ -8,14 +8,14 @@ import { Photo } from "./Photo";
 import { LogoMark, ServiceIcon } from "./icons";
 
 const wrap = "mx-auto max-w-7xl px-5 md:px-8";
-const section = "py-20 md:py-24";
+const section = "py-6 md:py-24";
 
 function Head({ eyebrow, title, sub, center = false }: { eyebrow: string; title: string; sub?: string; center?: boolean }) {
   return (
-    <Reveal className={`mb-12 flex max-w-2xl flex-col gap-3 ${center ? "mx-auto items-center text-center" : ""}`}>
-      <span className="rounded-full bg-gold/25 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-night">{eyebrow}</span>
-      <h2 className="text-3xl font-extrabold text-night md:text-5xl">{title}</h2>
-      {sub && <p className="text-lg text-muted">{sub}</p>}
+    <Reveal className={`mb-3 flex max-w-2xl flex-col gap-2 md:mb-12 md:gap-3 ${center ? "mx-auto items-center text-center" : ""}`}>
+      <span className="hidden rounded-full bg-gold/25 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-night md:inline-block md:px-4 md:py-1.5 md:text-xs">{eyebrow}</span>
+      <h2 className="text-2xl font-extrabold text-night md:text-5xl">{title}</h2>
+      {sub && <p className="hidden text-lg text-muted md:block">{sub}</p>}
     </Reveal>
   );
 }
@@ -96,12 +96,12 @@ export function RatesPreview({ services }: { services: Service[] }) {
     <section id="rates" className={`${section} scroll-mt-28 bg-white`}>
       <div className={wrap}>
         <Head eyebrow="Our rates" title="Simple, transparent pricing" sub="Starting prices per item, exclusive of GST. Pick a category to see the rates." />
-        <RateCard services={services} />
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Link href="/rates" className="rounded-xl bg-night px-7 py-3.5 font-bold text-white transition-transform hover:scale-[1.03]">
-            View full rate list
+        <RateCard services={services} mobileRows={3} />
+        <div className="mt-5 grid grid-cols-2 gap-3 md:mt-8 md:flex md:flex-wrap">
+          <Link href="/rates" className="rounded-xl bg-night px-4 py-3 text-center text-sm font-bold text-white transition-transform hover:scale-[1.03] md:px-7 md:py-3.5 md:text-base">
+            Full rate list
           </Link>
-          <Link href="/book" className="rounded-xl bg-gold px-7 py-3.5 font-bold text-night transition-transform hover:scale-[1.03]">
+          <Link href="/book" className="rounded-xl bg-gold px-4 py-3 text-center text-sm font-bold text-night transition-transform hover:scale-[1.03] md:px-7 md:py-3.5 md:text-base">
             Book a pickup
           </Link>
         </div>
@@ -113,24 +113,24 @@ export function RatesPreview({ services }: { services: Service[] }) {
 export function WhatsAppBand() {
   const steps = ["Tap the button and say Hi", "Share your address and items", "Pick a pickup slot", "We confirm on WhatsApp"];
   return (
-    <section className="bg-night py-16 text-white">
+    <section className="bg-night py-5 text-white md:py-16">
       <div className={`${wrap} grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]`}>
-        <Reveal className="flex flex-col gap-5">
-          <span className="w-fit rounded-full bg-[#25D366]/20 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-[#5EE08F]">Book on WhatsApp</span>
-          <h2 className="text-3xl font-extrabold md:text-5xl">
+        <Reveal className="flex flex-col gap-3 md:gap-5">
+          <span className="hidden w-fit rounded-full bg-[#25D366]/20 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-[#5EE08F] md:block">Book on WhatsApp</span>
+          <h2 className="text-2xl font-extrabold md:text-5xl">
             Book your pickup in <span className="text-gold">30 seconds</span>
           </h2>
-          <p className="max-w-lg text-lg text-white/75">Prefer chatting? Message us on WhatsApp and we will schedule your pickup, share rates and confirm your slot.</p>
-          <div className="flex flex-wrap gap-3">
-            <a href={waLink("Hi! I'd like to book a laundry pickup.")} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl bg-[#25D366] px-7 py-4 font-bold text-white transition-transform hover:scale-[1.03]">
+          <p className="hidden max-w-lg text-lg text-white/75 md:block">Prefer chatting? Message us on WhatsApp and we will schedule your pickup, share rates and confirm your slot.</p>
+          <div className="grid grid-cols-2 gap-3 md:flex md:flex-wrap">
+            <a href={waLink("Hi! I'd like to book a laundry pickup.")} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.03] md:px-7 md:py-4 md:text-base">
               <MessageCircle className="size-5" aria-hidden /> Chat on WhatsApp
             </a>
-            <a href={`tel:${BUSINESS.phoneRaw}`} className="flex items-center gap-2 rounded-xl border-2 border-white/40 px-7 py-[14px] font-bold transition-colors hover:border-gold hover:text-gold">
+            <a href={`tel:${BUSINESS.phoneRaw}`} className="flex items-center justify-center gap-2 rounded-xl border-2 border-white/40 px-4 py-[10px] text-sm font-bold transition-colors hover:border-gold hover:text-gold md:px-7 md:py-[14px] md:text-base">
               <Phone className="size-5" aria-hidden /> Call us
             </a>
           </div>
         </Reveal>
-        <Reveal delay={0.15}>
+        <Reveal delay={0.15} className="hidden lg:block">
           <ol className="flex flex-col gap-3">
             {steps.map((s, i) => (
               <li key={s} className="flex items-center gap-4 rounded-2xl bg-white/10 px-5 py-4">
@@ -150,15 +150,15 @@ export function WhyUs() {
     <section className={`${section} bg-white`}>
       <div className={wrap}>
         <Head center eyebrow="Why choose us" title="Garment care you can trust" />
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-3 gap-2 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
           {FEATURES.map((f, i) => (
             <Reveal key={f.title} delay={(i % 3) * 0.08}>
-              <div className="flex h-full flex-col gap-3 rounded-3xl border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-xl">
-                <span className="flex size-12 items-center justify-center rounded-2xl bg-gold/25 text-night">
-                  <BadgeCheck className="size-6" aria-hidden />
+              <div className="flex h-full flex-col items-center gap-1.5 rounded-xl border border-line bg-white p-2.5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-xl md:items-start md:gap-3 md:rounded-3xl md:p-7 md:text-left">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-gold/25 text-night md:size-12 md:rounded-2xl">
+                  <BadgeCheck className="size-5 md:size-6" aria-hidden />
                 </span>
-                <h3 className="text-lg font-bold">{f.title}</h3>
-                <p className="text-[15px] leading-relaxed text-muted">{f.text}</p>
+                <h3 className="text-[11px] font-semibold leading-tight md:text-lg md:font-bold">{f.title}</h3>
+                <p className="hidden text-[15px] leading-relaxed text-muted md:block">{f.text}</p>
               </div>
             </Reveal>
           ))}
@@ -171,23 +171,23 @@ export function WhyUs() {
 export function Cities() {
   return (
     <section className={`${section} bg-surface`}>
-      <div className={`${wrap} grid items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]`}>
-        <Reveal className="flex flex-col gap-5">
-          <span className="w-fit rounded-full bg-gold/25 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em]">Our stores</span>
-          <h2 className="text-3xl font-extrabold md:text-5xl">Six stores across Noida</h2>
-          <p className="text-lg text-muted">Pick your nearest store for pickup, or walk in. Open every day, 9:00 am to 8:00 pm.</p>
-          <Link href="/stores" className="w-fit rounded-xl bg-night px-7 py-3.5 font-bold text-white transition-transform hover:scale-[1.03]">
+      <div className={`${wrap} grid items-center gap-5 md:gap-12 lg:grid-cols-[0.8fr_1.2fr]`}>
+        <Reveal className="flex flex-col gap-2 md:gap-5">
+          <span className="hidden w-fit rounded-full bg-gold/25 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] md:block">Our stores</span>
+          <h2 className="text-2xl font-extrabold md:text-5xl">Six stores across Noida</h2>
+          <p className="hidden text-lg text-muted md:block">Pick your nearest store for pickup, or walk in. Open every day, 9:00 am to 8:00 pm.</p>
+          <Link href="/stores" className="hidden w-fit rounded-xl bg-night px-7 py-3.5 font-bold text-white transition-transform hover:scale-[1.03] md:block">
             View store details
           </Link>
         </Reveal>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-3 gap-2 md:grid-cols-2 md:gap-3">
           {STORES.map((s, i) => (
             <Reveal key={s.id} delay={i * 0.04}>
-              <Link href={`/book?city=${encodeURIComponent(s.name)}`} className="group flex items-start gap-3 rounded-2xl border border-line bg-white px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold hover:shadow-lg">
-                <MapPin className="mt-1 size-4 shrink-0 text-gold-deep" aria-hidden />
+              <Link href={`/book?city=${encodeURIComponent(s.name)}`} className="group flex items-center justify-center gap-2 rounded-xl border border-line bg-white px-2 py-2.5 text-center transition-all duration-300 hover:-translate-y-0.5 hover:border-gold hover:shadow-lg md:items-start md:justify-start md:gap-3 md:rounded-2xl md:px-5 md:py-4 md:text-left">
+                <MapPin className="hidden size-4 shrink-0 text-gold-deep md:mt-1 md:block" aria-hidden />
                 <span>
-                  <span className="block font-semibold">{s.name}</span>
-                  <span className="block text-sm text-muted">{s.address}</span>
+                  <span className="block text-[13px] font-semibold md:text-base">{s.name.replace("Noida ", "")}</span>
+                  <span className="hidden text-sm text-muted md:block">{s.address}</span>
                 </span>
               </Link>
             </Reveal>
@@ -204,16 +204,16 @@ export function Reviews() {
     <section className={`${section} bg-white`}>
       <div className={wrap}>
         <Head center eyebrow="Reviews" title="Loved by our customers" sub="Garment care for important people, by people who care." />
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-1 md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0">
           {sample.map((r, i) => (
-            <Reveal key={i} delay={i * 0.1}>
-              <figure className="flex h-full flex-col gap-4 rounded-3xl bg-ivory p-8">
-                <div className="flex gap-1 text-gold" aria-label="5 out of 5 stars">
+            <Reveal key={i} delay={i * 0.1} className="w-[82%] shrink-0 snap-center md:w-auto">
+              <figure className="flex h-full flex-col gap-2 rounded-2xl bg-ivory p-4 md:gap-4 md:rounded-3xl md:p-8">
+                <div className="hidden gap-1 text-gold md:flex" aria-label="5 out of 5 stars">
                   {Array.from({ length: 5 }).map((_, k) => (
-                    <Star key={k} className="size-5 fill-current" aria-hidden />
+                    <Star key={k} className="size-4 fill-current md:size-5" aria-hidden />
                   ))}
                 </div>
-                <blockquote className="flex-1 leading-relaxed">{r.t}</blockquote>
+                <blockquote className="line-clamp-3 flex-1 text-sm leading-relaxed md:line-clamp-none md:text-base">{r.t}</blockquote>
                 <figcaption className="text-sm font-bold">{r.w}</figcaption>
               </figure>
             </Reveal>
@@ -227,14 +227,14 @@ export function Reviews() {
 export function Faq() {
   return (
     <section className={`${section} bg-surface`}>
-      <div className={`${wrap} grid gap-12 lg:grid-cols-[0.8fr_1.2fr]`}>
-        <Reveal className="flex flex-col gap-4">
-          <span className="w-fit rounded-full bg-gold/25 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em]">FAQ</span>
-          <h2 className="text-3xl font-extrabold md:text-5xl">Questions, answered</h2>
-          <p className="text-lg text-muted">Cannot find what you need? Message us on WhatsApp.</p>
+      <div className={`${wrap} grid gap-4 md:gap-12 lg:grid-cols-[0.8fr_1.2fr]`}>
+        <Reveal className="flex flex-col gap-2 md:gap-4">
+          <span className="hidden w-fit rounded-full bg-gold/25 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] md:block">FAQ</span>
+          <h2 className="text-2xl font-extrabold md:text-5xl">Questions, answered</h2>
+          <p className="hidden text-lg text-muted md:block">Cannot find what you need? Message us on WhatsApp.</p>
         </Reveal>
         <Reveal delay={0.1}>
-          <Accordion items={[...FAQS]} />
+          <Accordion items={[...FAQS]} mobileLimit={2} />
         </Reveal>
       </div>
     </section>
@@ -243,14 +243,14 @@ export function Faq() {
 
 export function CtaBand() {
   return (
-    <section className="bg-white py-16">
+    <section className="bg-white pb-6 pt-2 md:py-16">
       <div className={wrap}>
-        <Reveal className="flex flex-col items-start justify-between gap-8 rounded-[2rem] bg-gold p-10 md:flex-row md:items-center md:p-14">
+        <Reveal className="flex flex-col items-start justify-between gap-3 rounded-3xl bg-gold p-4 md:flex-row md:items-center md:gap-8 md:rounded-[2rem] md:p-14">
           <div>
-            <h2 className="text-3xl font-extrabold text-night md:text-5xl">Ready for fresh, clean clothes?</h2>
-            <p className="mt-2 text-lg text-night/80">Book a pickup in under a minute.</p>
+            <h2 className="text-xl font-extrabold text-night md:text-5xl">Ready for fresh, clean clothes?</h2>
+            <p className="mt-1 hidden text-sm text-night/80 md:mt-2 md:block md:text-lg">Book a pickup in under a minute.</p>
           </div>
-          <Link href="/book" className="rounded-xl bg-night px-9 py-4 font-bold text-white transition-transform hover:scale-[1.04]">
+          <Link href="/book" className="w-full rounded-xl bg-night px-9 py-3.5 text-center font-bold text-white transition-transform hover:scale-[1.04] md:w-auto md:py-4">
             Schedule Your Pickup
           </Link>
         </Reveal>
