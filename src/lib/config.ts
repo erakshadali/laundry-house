@@ -47,29 +47,56 @@ export const STEPS = [
   { title: "QC & premium packaging", text: "Thorough quality checks followed by hygienic packaging for lasting freshness." },
 ];
 
+/** The four pillars, from the client's FAQ page. */
 export const FEATURES = [
-  { title: "Doorstep convenience", text: "Convenient pickup and delivery from your home, with your garments handled with care from start to finish." },
-  { title: "Fabric-safe cleaning", text: "Advanced stain removal and cleaning techniques customised for each fabric to maintain colour, texture and durability." },
-  { title: "Advanced cleaning services", text: "Innovative cleaning techniques combined with careful fabric handling for superior, long-lasting freshness." },
+  { title: "Safe & clean", text: "Skin-friendly, European-standard detergents with soft water for colour retention and gentle care." },
+  { title: "Unmatched quality", text: "Carefully designed processes for every fabric type, on professional-grade machines imported from Germany." },
+  { title: "Transparency", text: "Open-store layouts (the Live Laundry experience) that let you see our care standards." },
+  { title: "Convenience", text: "Easy pickup, delivery and scheduling, online or on WhatsApp." },
   { title: "Inspection & stain mapping", text: "Every garment is inspected and stains are identified before any treatment begins." },
-  { title: "Eco-friendly processes", text: "State-of-the-art equipment and eco-friendly processes for superior results." },
-  { title: "Quality check & packaging", text: "Each order is quality checked and hygienically packed for lasting freshness." },
+  { title: "Re-clean guarantee", text: "Not satisfied with the result? We offer a complimentary re-cleaning in line with our service guidelines." },
 ];
 
+/** All nine services listed on thelaundryhouseindia.com/services. */
+export const MORE_SERVICES = [
+  { name: "Garment Care", text: "Professional cleaning that preserves fabric quality, colour and freshness for daily and premium wear." },
+  { name: "Shoe & Bags", text: "Specialised cleaning that restores hygiene, appearance and material integrity without damage." },
+  { name: "Home & Auto Fabrics", text: "Deep cleaning for home and car fabrics that removes dust, stains and allergens while protecting texture." },
+  { name: "Wedding Couture", text: "Expert care for bridal and designer outfits with delicate fabrics, detailed embroidery and precision finishing." },
+  { name: "Curtains & Drapes", text: "Removes dust and pollutants using safe steam or deep wash methods." },
+  { name: "Carpet & Rugs", text: "Eliminates deep dirt, stains and odours while restoring softness." },
+  { name: "Luxury Leather Care", text: "Premium leather cleaning and restoration to enhance shine, repair wear and extend lifespan." },
+  { name: "Silk & Satin Wear", text: "Gentle cleaning that preserves softness, sheen and delicate detailing." },
+  { name: "Kids Wear", text: "Safe, hygienic cleaning using gentle detergents suitable for sensitive fabrics." },
+];
+
+/** Customer reviews from thelaundryhouseindia.com. */
 export const REVIEWS = [
   { text: "TLH have genuinely excellent services. Now I don't worry about stains on my clothes as I am confident that TLH will remove them.", who: "Ravi Choksi" },
   { text: "A very nice and modern unit-cum-store for dry cleaning. Qualitative work, attentive and decent staff. A well-managed place.", who: "Keshav Mitra" },
   { text: "Overall excellent service from start to finish. Proper professionals with great knowledge of fabrics, cleaning and customer service.", who: "Uzair Delair" },
+  { text: "Best place to get your laundry done. Not just dry cleaning, but also curtains, carpets, soft toys, house and car cleaning, and even sneaker cleaning.", who: "Sagar Sharma" },
+  { text: "The laundry services are great. Their packing and delivery options are really nice. The best service around here.", who: "Akshara Tarkas" },
 ];
+
+export const ABOUT = {
+  lead: "At The Laundry House, garment care goes beyond cleaning. We focus on preserving fabric quality, extending garment life, and delivering a consistently premium experience through advanced technology, expert processes, and attention to detail.",
+  safeTitle: "Safe for your body's largest organ",
+  safe: "We use only premium, skin-friendly European detergents that meet strict regulatory standards. Choosing them reduces the skin irritation and health risks linked to unregulated detergents, and reflects our commitment to responsible garment care.",
+  techTitle: "Where technology, skill & service merge",
+  tech: "State-of-the-art technology, eco-friendly processes and highly trained professionals make sure each piece of clothing is treated with the utmost care. From delicate silks to sturdy denims, stubborn stains to intricate embroideries, nothing is too challenging for our master cleaners.",
+};
 
 export const FAQS = [
-  { q: "How does pickup and delivery work?", a: "Book a slot online or on WhatsApp. Our executive collects your garments from your door in that slot and delivers them back once cleaned." },
-  { q: "How are prices calculated?", a: "Rates are per item and are starting prices, exclusive of GST. Designer and bridal apparel is charged based on quality and specific requirements." },
-  { q: "What is steam press?", a: "Steam press is finishing only (no cleaning) at a lower rate, for garments that just need to look crisp and ready to wear." },
-  { q: "What if a stain does not come out?", a: "Every garment is inspected and stains are mapped before treatment. If a stain is permanent we tell you before returning the item." },
-  { q: "Can I pay on delivery?", a: "Yes, you can pay on delivery. Online payment is coming soon." },
+  { q: "How do I schedule a pickup?", a: "Pickups can be scheduled through our website or on WhatsApp by selecting your preferred time slot. We offer doorstep pickup and delivery." },
+  { q: "How long does cleaning take?", a: "Standard turnaround is typically 3–4 days. Restoration and delicate items may need additional time. Express service is available in select locations." },
+  { q: "Do I need to pay in advance?", a: "Individual orders can be paid at the time of delivery. Membership plans require advance payment. We accept UPI, credit/debit cards and digital wallets." },
+  { q: "Which chemicals do you use?", a: "Eco-friendly, mild, skin-friendly European-standard detergents along with soft water, for garment safety and colour retention." },
+  { q: "Is it suitable for couture and wedding wear?", a: "Yes. High-value garments undergo fabric inspection and customised cleaning for delicate embroidery, silks and luxury fabrics, including manual stain treatment and pH-neutral cleaning." },
+  { q: "What if a garment is damaged?", a: "Every garment is inspected before processing. If a fabric is high-risk we consult you first. In rare cases of damage, resolution is handled transparently based on garment age and value." },
+  { q: "What if I am not satisfied?", a: "We offer a complimentary re-cleaning in line with our service guidelines." },
+  { q: "What machines do you use?", a: "Professional-grade machines imported from Germany, with specialised programs for different fabric and garment types." },
 ];
-
 export const SLOT_CAPACITY = 10;
 
 export const SLOTS = [

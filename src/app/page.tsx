@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
 import { QuickBook } from "@/components/site/QuickBook";
+import { ExploreTabs, QuickActions } from "@/components/site/MobileKit";
 import {
   Cities,
   CtaBand,
@@ -30,15 +31,20 @@ export default async function Home() {
       <main>
         <Hero videoSrc={heroVideo} />
         <QuickBook services={services} today={todayIST()} />
+        <QuickActions />
         <StatsStrip />
         <ServiceCarousel />
         <HowItWorks />
         <RatesPreview services={services} />
         <WhatsAppBand />
-        <WhyUs />
-        <Cities />
-        <Reviews />
-        <Faq />
+        {/* Laptop and tablet: full sections. Phone: one tabbed card instead. */}
+        <div className="hidden md:block">
+          <WhyUs />
+          <Cities />
+          <Reviews />
+          <Faq />
+        </div>
+        <ExploreTabs />
         <CtaBand />
       </main>
       <Footer />

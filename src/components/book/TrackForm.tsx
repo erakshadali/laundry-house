@@ -20,9 +20,19 @@ const FLOW = [
 const input =
   "h-12 w-full rounded-xl border border-[#DDD3C2] bg-white px-4 text-[15px] outline-none focus:border-aqua focus:ring-2 focus:ring-aqua/30";
 
+/** The order ID and phone from this browser's last booking, so tracking is one tap. */
+function loadLast(): { id?: string; phone?: string } {
+  try {
+    return JSON.parse(localStorage.getItem("lh_last") || "{}");
+  } catch {
+    return {};
+  }
+}
+
 export function TrackForm() {
-  const [id, setId] = useState("");
-  const [phone, setPhone] = useState("");
+  const [last] = useState(loadLast);
+  const [id, setId] = useState(last.id ?? "");
+  const [phone, setPhone] = useState(last.phone ?? "");
   const [order, setOrder] = useState<Found | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

@@ -23,7 +23,7 @@ export default async function BookPage({
         <BookingWizard
           services={services}
           dates={dates}
-          initial={{ service: sp.service, city: sp.city, date: sp.date, slot: sp.slot }}
+          initial={{ service: sp.service, city: sp.city, date: sp.date, slot: sp.slot, items: sp.items }}
         />
       </main>
     </>

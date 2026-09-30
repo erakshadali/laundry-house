@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
-import { LayoutDashboard, LogOut, Package, Tags } from "lucide-react";
+import { LayoutDashboard, LogOut, Package, Printer, Tags, Truck } from "lucide-react";
 import { BUSINESS, SLOTS, STATUSES } from "@/lib/config";
 import type { Order, OrderStatus, Service } from "@/lib/types";
 import { cn, formatINR, prettyDate, waLink } from "@/lib/utils";
@@ -12,6 +12,7 @@ import { LogoMark } from "@/components/site/icons";
 
 const nav = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
+  { href: "/admin/pickups", label: "Pickups", icon: Truck },
   { href: "/admin/orders", label: "Orders", icon: Package },
   { href: "/admin/services", label: "Services and pricing", icon: Tags },
 ];
@@ -101,6 +102,7 @@ export function OrdersTable({ orders: initial, compact = false }: { orders: Orde
   const router = useRouter();
   const [orders, setOrders] = useState(initial);
   const [filter, setFilter] = useState<"all" | OrderStatus>("all");
+  const [store, setStore] = useState("all");
   const [busy, setBusy] = useState<string | null>(null);
   const [err, setErr] = useState("");
 
@@ -118,10 +120,22 @@ export function OrdersTable({ orders: initial, compact = false }: { orders: Orde
     router.refresh();
   }
 
-  const shown = filter === "all" ? orders : orders.filter((o) => o.status === filter);
+  const stores = [...new Set(orders.map((o) => o.customer.city))].sort();
+  const shown = orders.filter((o) => (filter === "all" || o.status === filter) && (store === "all" || o.customer.city === store));
 
   return (
     <div className="flex flex-col gap-4">
+      {!compact && stores.length > 1 && (
+        <label className="flex w-fit items-center gap-2 text-sm font-bold text-muted">
+          Store
+          <select value={store} onChange={(e) => setStore(e.target.value)} className="h-10 rounded-full border border-line bg-white px-4 text-sm font-semibold text-night">
+            <option value="all">All stores</option>
+            {stores.map((s) => (
+              <option key={s}>{s}</option>
+            ))}
+          </select>
+        </label>
+      )}
       {!compact && (
         <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter by status">
           {[{ id: "all", label: "All" }, ...STATUSES].map((s) => (
@@ -312,5 +326,13 @@ export function LoginForm() {
         {loading ? "Signing in..." : "Sign in"}
       </button>
     </form>
+  );
+}
+
+export function PrintButton() {
+  return (
+    <button onClick={() => window.print()} className="flex items-center gap-2 rounded-full bg-night px-4 py-2 text-sm font-bold text-white">
+      <Printer className="size-4" aria-hidden /> Print list
+    </button>
   );
 }

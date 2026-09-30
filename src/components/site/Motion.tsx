@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, animate, motion, useInView, useMotionValue, useScroll, useSpring } from "framer-motion";
-import { ChevronLeft, ChevronRight, Plus, Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Minus, Plus, Search } from "lucide-react";
 import { CATEGORIES } from "@/lib/config";
 import type { Service } from "@/lib/types";
-import { cn, formatINR } from "@/lib/utils";
+import { cn, formatINR, waLink } from "@/lib/utils";
 import Link from "next/link";
 
 /** Thin yellow bar at the top that fills as you scroll. */
@@ -138,14 +138,56 @@ function toRows(list: Service[]): RateRow[] {
   return [...map.values()];
 }
 
-/** Rate list with category tabs; `full` adds search and shows every row. `mobileRows` limits rows on phones. */
+function Adder({ qty, onAdd, onSub, label }: { qty: number; onAdd: () => void; onSub: () => void; label: string }) {
+  if (qty === 0) {
+    return (
+      <button onClick={onAdd} aria-label={`Add ${label}`} className="flex size-8 items-center justify-center rounded-full bg-gold text-night transition-transform active:scale-90">
+        <Plus className="size-4" />
+      </button>
+    );
+  }
+  return (
+    <span className="flex items-center gap-1">
+      <button onClick={onSub} aria-label={`Remove one ${label}`} className="flex size-7 items-center justify-center rounded-full border border-night text-night">
+        <Minus className="size-3.5" />
+      </button>
+      <span className="w-5 text-center text-sm font-extrabold" aria-live="polite">{qty}</span>
+      <button onClick={onAdd} aria-label={`Add one more ${label}`} className="flex size-7 items-center justify-center rounded-full bg-night text-white">
+        <Plus className="size-3.5" />
+      </button>
+    </span>
+  );
+}
+
+/**
+ * Rate list with category tabs. `full` adds search and a price calculator (tap + to build an order).
+ * `mobileRows` limits rows on phones.
+ */
 export function RateCard({ services, full = false, mobileRows }: { services: Service[]; full?: boolean; mobileRows?: number }) {
   const cats = CATEGORIES.filter((c) => services.some((s) => s.category === c.id));
   const [tab, setTab] = useState<string>(cats[0]?.id ?? "");
   const [q, setQ] = useState("");
+  const [cart, setCart] = useState<Record<string, number>>({});
   const query = q.trim().toLowerCase();
   const all = toRows(services);
   const rows = query ? all.filter((r) => r.name.toLowerCase().includes(query)) : all.filter((r) => r.category === tab);
+
+  const add = (id: string) => setCart((c) => ({ ...c, [id]: Math.min(50, (c[id] ?? 0) + 1) }));
+  const sub = (id: string) =>
+    setCart((c) => {
+      const n = (c[id] ?? 0) - 1;
+      const { [id]: _removed, ...rest } = c;
+      void _removed;
+      return n > 0 ? { ...rest, [id]: n } : rest;
+    });
+  const lines = Object.entries(cart)
+    .map(([id, n]) => ({ s: services.find((x) => x.id === id)!, n }))
+    .filter((l) => l.s);
+  const count = lines.reduce((a, l) => a + l.n, 0);
+  const total = lines.reduce((a, l) => a + l.n * l.s.price, 0);
+  const waText = `Hi! I'd like a pickup for:\n${lines.map((l) => `- ${l.s.name} x ${l.n}`).join("\n")}\nEstimated total: ${formatINR(total)} (excl. GST)`;
+  const col = full ? "w-[5.5rem] md:w-28" : "w-16 md:w-24";
+
   return (
     <div className="flex flex-col gap-4 md:gap-6">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
@@ -181,34 +223,49 @@ export function RateCard({ services, full = false, mobileRows }: { services: Ser
           </label>
         )}
       </div>
+      {full && <p className="-mb-2 rounded-xl bg-mint px-4 py-2.5 text-sm font-medium">Tap <b>+</b> on any item to build your order and see an estimate.</p>}
       <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
         <div className="flex items-center justify-end gap-4 border-b border-line bg-surface px-4 py-2 text-[11px] font-bold uppercase tracking-wide text-muted md:px-7">
-          <span className="w-16 text-right md:w-24">Dry clean</span>
-          <span className="w-16 text-right md:w-24">Steam press</span>
-          <span className="hidden w-14 sm:block" />
+          <span className={cn("text-right", col)}>Dry clean</span>
+          <span className={cn("text-right", col)}>Steam press</span>
+          {!full && <span className="hidden w-14 sm:block" />}
         </div>
         <AnimatePresence mode="wait">
           <motion.ul key={query ? "search" : tab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="divide-y divide-line">
             {rows.length === 0 && <li className="px-6 py-8 text-center text-muted">No items found.</li>}
             {rows.map((r, i) => {
               const bookId = (r.dc ?? r.sp ?? r.single)!.id;
+              const cell = (s: Service | undefined) =>
+                s ? (
+                  <span className={cn("flex flex-col items-end gap-1.5", col)}>
+                    <span className="text-sm font-bold md:text-lg">{formatINR(s.price)}</span>
+                    {full && <Adder qty={cart[s.id] ?? 0} onAdd={() => add(s.id)} onSub={() => sub(s.id)} label={s.name} />}
+                  </span>
+                ) : (
+                  <span className={cn("text-right text-sm font-bold md:text-lg", col)}>–</span>
+                );
               return (
                 <li key={r.key} className={cn("flex items-center justify-between gap-3 px-4 py-3 md:px-7 md:py-4", mobileRows !== undefined && i >= mobileRows && "max-md:hidden")}>
                   <div className="min-w-0 flex-1 text-sm font-semibold leading-snug md:text-base">{r.name}</div>
-                  <div className="flex shrink-0 items-center gap-4">
+                  <div className="flex shrink-0 items-start gap-4">
                     {r.single ? (
-                      <span className="w-[8.5rem] text-right text-sm font-bold md:w-[12.5rem] md:text-lg">
-                        {formatINR(r.single.price)} <span className="text-xs font-normal text-muted">/ {r.single.unit}</span>
+                      <span className={cn("flex flex-col items-end gap-1.5", full ? "w-[11.5rem] md:w-[15rem]" : "w-[8.5rem] md:w-[12.5rem]")}>
+                        <span className="text-sm font-bold md:text-lg">
+                          {formatINR(r.single.price)} <span className="text-xs font-normal text-muted">/ {r.single.unit}</span>
+                        </span>
+                        {full && <Adder qty={cart[r.single.id] ?? 0} onAdd={() => add(r.single!.id)} onSub={() => sub(r.single!.id)} label={r.single.name} />}
                       </span>
                     ) : (
                       <>
-                        <span className="w-16 text-right text-sm font-bold md:w-24 md:text-lg">{r.dc ? formatINR(r.dc.price) : "–"}</span>
-                        <span className="w-16 text-right text-sm font-bold md:w-24 md:text-lg">{r.sp ? formatINR(r.sp.price) : "–"}</span>
+                        {cell(r.dc)}
+                        {cell(r.sp)}
                       </>
                     )}
-                    <Link href={`/book?service=${bookId}`} className="hidden w-14 rounded-full bg-gold px-3 py-2 text-center text-xs font-bold text-night transition-transform hover:scale-105 sm:block">
-                      Book
-                    </Link>
+                    {!full && (
+                      <Link href={`/book?service=${bookId}`} className="hidden w-14 rounded-full bg-gold px-3 py-2 text-center text-xs font-bold text-night transition-transform hover:scale-105 sm:block">
+                        Book
+                      </Link>
+                    )}
                   </div>
                 </li>
               );
@@ -217,6 +274,30 @@ export function RateCard({ services, full = false, mobileRows }: { services: Ser
         </AnimatePresence>
       </div>
       <p className={cn("text-xs text-muted", mobileRows !== undefined && "max-md:hidden")}>Starting prices per item, exclusive of GST. Designer and bridal apparel is charged based on quality and specific requirements.</p>
+
+      <AnimatePresence>
+        {full && count > 0 && (
+          <motion.div
+            initial={{ y: 80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 80, opacity: 0 }}
+            className="fixed inset-x-3 bottom-[4.75rem] z-40 flex items-center justify-between gap-3 rounded-2xl bg-night p-3 text-white shadow-2xl md:inset-x-auto md:bottom-6 md:right-6 md:w-[26rem] md:p-4"
+          >
+            <div className="min-w-0 pl-1">
+              <div className="text-xs text-white/70">{count} item{count > 1 ? "s" : ""} · estimate</div>
+              <div className="text-xl font-extrabold text-gold">{formatINR(total)}</div>
+            </div>
+            <div className="flex gap-2">
+              <a href={waLink(waText)} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-[#25D366] px-3.5 py-2.5 text-sm font-bold text-white">
+                WhatsApp
+              </a>
+              <Link href={`/book?items=${lines.map((l) => `${l.s.id}:${l.n}`).join(",")}`} className="rounded-xl bg-gold px-3.5 py-2.5 text-sm font-bold text-night">
+                Book these
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

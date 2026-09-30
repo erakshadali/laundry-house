@@ -4,6 +4,7 @@ import { BUSINESS, CATEGORIES, FAQS, FEATURES, REVIEWS, STEPS, STORES } from "@/
 import type { Service } from "@/lib/types";
 import { waLink } from "@/lib/utils";
 import { Accordion, Carousel, Counter, RateCard, Reveal } from "./Motion";
+import { MobileBar } from "./MobileKit";
 import { Photo } from "./Photo";
 import { LogoMark, ServiceIcon } from "./icons";
 
@@ -23,9 +24,9 @@ function Head({ eyebrow, title, sub, center = false }: { eyebrow: string; title:
 export function StatsStrip() {
   const stats = [
     { n: 6, s: "", label: "Stores across Noida" },
-    { n: 4, s: "", label: "Specialist services" },
     { n: 10, s: "", label: "Cities across India" },
-    { n: 11, s: "h", label: "Open hours, every day" },
+    { n: 60, s: "k+", label: "Customers served" },
+    { n: 9, s: "", label: "Specialist services" },
   ];
   return (
     <section className="bg-night text-white">
@@ -283,6 +284,8 @@ export function Footer() {
           <div className="mb-1 font-bold text-white">Quick links</div>
           <Link href="/rates" className="transition-colors hover:text-gold">Rates</Link>
           <Link href="/stores" className="transition-colors hover:text-gold">Stores</Link>
+          <Link href="/about" className="transition-colors hover:text-gold">About us</Link>
+          <Link href="/franchise" className="transition-colors hover:text-gold">Franchise</Link>
           <Link href="/track" className="transition-colors hover:text-gold">Track order</Link>
           <Link href="/book" className="transition-colors hover:text-gold">Book a pickup</Link>
         </div>
@@ -294,7 +297,7 @@ export function Footer() {
           <div>{BUSINESS.hours}</div>
         </div>
       </div>
-      <div className="border-t border-white/10 py-5 text-center text-xs">
+      <div className="border-t border-white/10 py-5 pb-24 text-center text-xs md:pb-5">
         © {new Date().getFullYear()} {BUSINESS.name} · Demo website
       </div>
     </footer>
@@ -303,7 +306,9 @@ export function Footer() {
 
 export function FloatingActions() {
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2.5 md:bottom-5 md:right-5 md:gap-3">
+    <>
+    <MobileBar />
+    <div className="fixed bottom-5 right-5 z-50 hidden flex-col gap-3 md:flex">
       <a href={`tel:${BUSINESS.phoneRaw}`} aria-label="Call us" className="flex size-12 items-center justify-center rounded-full bg-night text-white shadow-xl transition-transform hover:scale-110">
         <Phone className="size-5" aria-hidden />
       </a>
@@ -317,5 +322,6 @@ export function FloatingActions() {
         <MessageCircle className="size-7" aria-hidden />
       </a>
     </div>
+    </>
   );
 }

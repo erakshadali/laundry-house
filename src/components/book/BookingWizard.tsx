@@ -17,6 +17,15 @@ interface SlotInfo {
 }
 
 const STEPS = ["Services", "Date and slot", "Address", "Review and pay"];
+
+/** Details from the customer's last booking, kept only in this browser. */
+function loadSaved(): { name?: string; phone?: string; address?: string; city?: string } {
+  try {
+    return JSON.parse(localStorage.getItem("lh_customer") || "{}");
+  } catch {
+    return {};
+  }
+}
 const input =
   "h-12 w-full rounded-xl border border-[#DDD3C2] bg-white px-4 text-[15px] outline-none focus:border-aqua focus:ring-2 focus:ring-aqua/30";
 
@@ -27,21 +36,32 @@ export function BookingWizard({
 }: {
   services: Service[];
   dates: string[];
-  initial: { service?: string; city?: string; date?: string; slot?: string };
+  initial: { service?: string; city?: string; date?: string; slot?: string; items?: string };
 }) {
   const [step, setStep] = useState(0);
-  const [qty, setQty] = useState<Record<string, number>>(() =>
-    initial.service && services.some((s) => s.id === initial.service) ? { [initial.service]: 1 } : {},
-  );
+  const [qty, setQty] = useState<Record<string, number>>(() => {
+    // ?items=id:qty,id:qty comes from the rate calculator; ?service=id is a single item.
+    const fromItems: Record<string, number> = {};
+    for (const part of (initial.items ?? "").split(",")) {
+      const [id, n] = part.split(":");
+      const count = Math.min(100, Math.max(1, parseInt(n, 10) || 0));
+      if (id && count && services.some((s) => s.id === id)) fromItems[id] = count;
+    }
+    if (Object.keys(fromItems).length) return fromItems;
+    return initial.service && services.some((s) => s.id === initial.service) ? { [initial.service]: 1 } : {};
+  });
   const [date, setDate] = useState(initial.date && dates.includes(initial.date) ? initial.date : dates[0]);
   const [slotId, setSlotId] = useState<string>(initial.slot ?? "");
   const [slots, setSlots] = useState<SlotInfo[]>([]);
   const [slotsDate, setSlotsDate] = useState("");
   const loadingSlots = slotsDate !== date;
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [city, setCity] = useState<string>(CITIES.includes(initial.city as never) ? initial.city! : CITIES[0]);
-  const [address, setAddress] = useState("");
+  const [saved] = useState(loadSaved);
+  const [name, setName] = useState(saved.name ?? "");
+  const [phone, setPhone] = useState(saved.phone ?? "");
+  const [city, setCity] = useState<string>(
+    CITIES.includes(initial.city as never) ? initial.city! : CITIES.includes(saved.city as never) ? saved.city! : CITIES[0],
+  );
+  const [address, setAddress] = useState(saved.address ?? "");
   const [notes, setNotes] = useState("");
   const [payment, setPayment] = useState<"cod" | "online">("cod");
   const [error, setError] = useState("");
@@ -104,6 +124,12 @@ export function BookingWizard({
         setError(data.error ?? "Something went wrong. Please try again.");
         if (res.status === 409) setStep(1);
         return;
+      }
+      try {
+        localStorage.setItem("lh_customer", JSON.stringify({ name, phone, address, city }));
+        localStorage.setItem("lh_last", JSON.stringify({ id: data.order.id, phone }));
+      } catch {
+        /* private mode: skip remembering */
       }
       setDone(data.order);
     } catch {

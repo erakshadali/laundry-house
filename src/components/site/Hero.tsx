@@ -38,7 +38,7 @@ export function Hero({ videoSrc }: { videoSrc: string | null }) {
           <motion.p {...item(2)} className="line-clamp-3 max-w-xl text-[15px] leading-relaxed text-muted md:line-clamp-none md:text-lg">
             Dry cleaning, steam press, wedding couture, sneakers and bags, and home fabrics. Doorstep pickup and delivery, handled by fabric specialists.
           </motion.p>
-          <motion.div {...item(3)} className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
+          <motion.div {...item(3)} className="hidden gap-3 sm:flex sm:flex-wrap">
             <Link href="/book" className="flex items-center justify-center gap-2 rounded-xl bg-night px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-night/20 transition-transform hover:scale-[1.03] sm:px-7 sm:py-4 sm:text-base">
               <CalendarCheck className="hidden size-5 sm:block" aria-hidden /> <span className="sm:hidden">Book Pickup</span><span className="hidden sm:inline">Schedule Your Pickup</span>
             </Link>

@@ -5,7 +5,7 @@ import { CtaBand, FloatingActions, Footer } from "@/components/site/Sections";
 import { Reveal } from "@/components/site/Motion";
 import { Photo } from "@/components/site/Photo";
 import { ServiceIcon } from "@/components/site/icons";
-import { CATEGORIES } from "@/lib/config";
+import { CATEGORIES, MORE_SERVICES } from "@/lib/config";
 import { listServices } from "@/lib/store";
 import { formatINR, waLink } from "@/lib/utils";
 
@@ -84,6 +84,28 @@ export default async function ServicesPage() {
               );
             })}
             <p className="text-xs text-muted">Starting prices, exclusive of GST. Designer and bridal apparel is charged based on quality and specific requirements.</p>
+          </div>
+        </section>
+        <section className="bg-surface py-10 md:py-20">
+          <div className="mx-auto max-w-7xl px-5 md:px-8">
+            <h2 className="mb-2 text-2xl font-extrabold md:text-4xl">All our services</h2>
+            <p className="mb-6 text-muted md:mb-10">Not listed in the rate cards above? Ask for a quote on WhatsApp.</p>
+            <div className="grid gap-3 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
+              {MORE_SERVICES.map((m, i) => (
+                <Reveal key={m.name} delay={(i % 3) * 0.06}>
+                  <a
+                    href={waLink(`Hi! I'd like a quote for ${m.name}.`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex h-full flex-col gap-1.5 rounded-2xl border border-line bg-white p-4 transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-lg md:p-6"
+                  >
+                    <h3 className="text-base font-bold md:text-lg">{m.name}</h3>
+                    <p className="flex-1 text-sm leading-relaxed text-muted">{m.text}</p>
+                    <span className="mt-1 text-sm font-bold text-gold-deep">Get a quote on WhatsApp →</span>
+                  </a>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
         <CtaBand />
