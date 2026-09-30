@@ -89,6 +89,7 @@ export function BookingWizard({
     [services, qty],
   );
   const total = lines.reduce((sum, l) => sum + l.q * l.s.price, 0);
+  const selectedCount = lines.reduce((sum, l) => sum + l.q, 0);
   const slotLabel = SLOTS.find((s) => s.id === slotId)?.label;
 
   function next() {
@@ -184,7 +185,7 @@ export function BookingWizard({
   }
 
   return (
-    <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-6 xl:grid-cols-[190px_minmax(0,1fr)_320px] xl:gap-8">
+    <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-6 pb-28 xl:grid-cols-[190px_minmax(0,1fr)_320px] xl:gap-8 xl:pb-0">
       <ol className="flex min-w-0 gap-4 overflow-x-auto pb-1 xl:flex-col xl:gap-6 xl:overflow-visible" aria-label="Steps">
         {STEPS.map((label, i) => (
           <li key={label} className="flex shrink-0 items-center gap-3" aria-current={i === step ? "step" : undefined}>
@@ -342,9 +343,9 @@ export function BookingWizard({
           </motion.div>
         </AnimatePresence>
 
-        {error && <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{error}</p>}
+        {error && <p role="alert" className="hidden rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 xl:block">{error}</p>}
 
-        <div className="flex justify-between gap-3">
+        <div className="hidden justify-between gap-3 xl:flex">
           {step > 0 ? (
             <button onClick={() => { setError(""); setStep(step - 1); }} className="rounded-full border-[1.5px] border-[#DDD3C2] px-7 py-3.5 font-bold">Back</button>
           ) : (
@@ -355,6 +356,33 @@ export function BookingWizard({
           ) : (
             <button onClick={submit} disabled={submitting} className="rounded-full bg-aqua px-8 py-3.5 font-extrabold text-ink transition hover:brightness-110 disabled:opacity-60">
               {submitting ? "Booking..." : "Confirm booking"}
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Phone and tablet: the action bar stays on screen so Continue never needs scrolling. */}
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-line bg-white px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 shadow-[0_-8px_24px_rgba(15,42,92,0.14)] xl:hidden">
+        {error && <p role="alert" className="mb-2 rounded-lg bg-red-50 px-3 py-2 text-xs font-semibold text-red-700">{error}</p>}
+        <div className="mx-auto flex max-w-2xl items-center gap-3">
+          <div className="min-w-0 flex-1">
+            {selectedCount > 0 ? (
+              <>
+                <div className="text-xs font-semibold text-muted">{selectedCount} item{selectedCount > 1 ? "s" : ""} selected</div>
+                <div className="text-lg font-extrabold leading-tight">{formatINR(total)} <span className="text-xs font-medium text-muted">estimate</span></div>
+              </>
+            ) : (
+              <div className="text-sm font-semibold text-muted">{step === 0 ? "Select items to continue" : "Nothing selected yet"}</div>
+            )}
+          </div>
+          {step > 0 && (
+            <button onClick={() => { setError(""); setStep(step - 1); }} className="rounded-full border-[1.5px] border-[#DDD3C2] px-5 py-3 text-sm font-bold">Back</button>
+          )}
+          {step < 3 ? (
+            <button onClick={next} className={"rounded-full bg-aqua px-7 py-3 text-sm font-extrabold text-ink transition active:scale-95 " + (step === 0 && selectedCount === 0 ? "opacity-60" : "")}>Continue</button>
+          ) : (
+            <button onClick={submit} disabled={submitting} className="rounded-full bg-aqua px-7 py-3 text-sm font-extrabold text-ink transition active:scale-95 disabled:opacity-60">
+              {submitting ? "Booking..." : "Confirm"}
             </button>
           )}
         </div>
