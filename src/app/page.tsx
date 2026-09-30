@@ -18,6 +18,21 @@ import {
 } from "@/components/site/Sections";
 import { listServices } from "@/lib/store";
 import { todayIST } from "@/lib/utils";
+import { BUSINESS, STORES } from "@/lib/config";
+import { SITE_URL } from "@/lib/site";
+
+// Structured data so search engines can show each Noida store (address, phone, hours).
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": STORES.map((s) => ({
+    "@type": "LaundryOrDryCleaner",
+    name: `${BUSINESS.name} - ${s.name}`,
+    url: SITE_URL,
+    telephone: `+91${s.phone}`,
+    address: { "@type": "PostalAddress", streetAddress: s.address, addressLocality: "Noida", addressRegion: "Uttar Pradesh", addressCountry: "IN" },
+    sameAs: [BUSINESS.instagram, BUSINESS.youtube],
+  })),
+};
 
 export const dynamic = "force-dynamic";
 
@@ -27,6 +42,7 @@ export default async function Home() {
   const heroVideo = process.env.HERO_VIDEO || null;
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <Navbar />
       <main>
         <Hero videoSrc={heroVideo} />

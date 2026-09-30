@@ -82,7 +82,7 @@ export function Hero({ videoSrc }: { videoSrc: string | null }) {
           </div>
           <div className="floaty-slow absolute right-3 top-4 rounded-2xl bg-night p-3 text-white shadow-xl sm:top-8 md:-right-8 md:p-4">
             <div className="text-xl font-extrabold leading-none text-gold md:text-2xl">9 AM – 8 PM</div>
-            <div className="mt-1 text-xs text-white/80">Stores open daily</div>
+            <div className="mt-1 text-xs text-white/80">Store hours</div>
           </div>
         </motion.div>
       </div>

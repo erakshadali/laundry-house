@@ -176,7 +176,7 @@ export function Cities() {
         <Reveal className="flex flex-col gap-2 md:gap-5">
           <span className="hidden w-fit rounded-full bg-gold/25 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] md:block">Our stores</span>
           <h2 className="text-2xl font-extrabold md:text-5xl">Six stores across Noida</h2>
-          <p className="hidden text-lg text-muted md:block">Pick your nearest store for pickup, or walk in. Open every day, 9:00 am to 8:00 pm.</p>
+          <p className="hidden text-lg text-muted md:block">Pick your nearest store for pickup, or walk in. Store hours: 9:00 am to 8:00 pm.</p>
           <Link href="/stores" className="hidden w-fit rounded-xl bg-night px-7 py-3.5 font-bold text-white transition-transform hover:scale-[1.03] md:block">
             View store details
           </Link>
@@ -298,7 +298,9 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10 py-5 pb-24 text-center text-xs md:pb-5">
-        © {new Date().getFullYear()} {BUSINESS.name} · Demo website
+        © {new Date().getFullYear()} {BUSINESS.name} ·{" "}
+        <a href="https://thelaundryhouseindia.com/privacy-policy" target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:text-gold hover:underline">Privacy Policy</a> ·{" "}
+        <a href="https://thelaundryhouseindia.com/terms_and_condition" target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:text-gold hover:underline">Terms &amp; Conditions</a>
       </div>
     </footer>
   );

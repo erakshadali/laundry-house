@@ -15,7 +15,7 @@ export const BUSINESS = {
   address:
     process.env.NEXT_PUBLIC_ADDRESS ||
     "Head office: Shop No. 1, Parshwa Darshan Complex, Near Gaay Circle, Shrenik Park Crossing, Akota, Vadodara – 390020",
-  hours: process.env.NEXT_PUBLIC_HOURS || "Daily, 9:00 am – 8:00 pm",
+  hours: process.env.NEXT_PUBLIC_HOURS || "9:00 am – 8:00 pm",
   instagram: "https://www.instagram.com/the_laundry_house_official",
   youtube: "https://youtube.com/@thelaundryhouse",
 };

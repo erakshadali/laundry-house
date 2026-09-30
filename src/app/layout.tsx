@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ScrollProgress } from "@/components/site/Motion";
+import { SITE_URL } from "@/lib/site";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -11,7 +12,15 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "The Laundry House | Premium Laundry & Dry Cleaning in Noida",
+  metadataBase: new URL(SITE_URL),
+  title: { default: "The Laundry House | Premium Laundry & Dry Cleaning in Noida", template: "%s" },
+  openGraph: {
+    type: "website",
+    siteName: "The Laundry House",
+    locale: "en_IN",
+    title: "The Laundry House | Premium Laundry & Dry Cleaning in Noida",
+    description: "Garment care for important people. Dry cleaning, steam press, wedding couture, sneakers and bags. Doorstep pickup and delivery.",
+  },
   description:
     "Premium garment care in Noida: dry cleaning, steam press, wedding couture, sneakers and bags, home and auto fabrics. Doorstep pickup and delivery. Book online or on WhatsApp.",
   icons: { icon: "/pwa/192", apple: "/pwa/180" },
