@@ -42,3 +42,7 @@ next-env.d.ts
 
 # demo database
 /data/
+.vercel
+.env*
+
+.admin-password.txt
