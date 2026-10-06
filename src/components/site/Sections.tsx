@@ -260,6 +260,8 @@ export function CtaBand() {
   );
 }
 
+const footLink = "flex min-h-11 items-center transition-colors hover:text-gold md:min-h-0";
+
 export function Footer() {
   return (
     <footer id="contact" className="bg-night pt-16 text-white/75">
@@ -269,38 +271,38 @@ export function Footer() {
             <LogoMark /> {BUSINESS.name}
           </div>
           <p className="mt-4 max-w-xs leading-relaxed">{BUSINESS.tagline}. Premium laundry and dry cleaning with doorstep pickup and delivery.</p>
-          <div className="mt-5 flex gap-4 text-sm font-semibold">
-            <a href={BUSINESS.instagram} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold">Instagram</a>
-            <a href={BUSINESS.youtube} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold">YouTube</a>
+          <div className="mt-3 flex gap-2 text-sm font-semibold md:mt-5 md:gap-4">
+            <a href={BUSINESS.instagram} target="_blank" rel="noopener noreferrer" className={footLink}>Instagram</a>
+            <a href={BUSINESS.youtube} target="_blank" rel="noopener noreferrer" className={footLink}>YouTube</a>
           </div>
         </div>
-        <div className="flex flex-col gap-2 text-sm">
-          <div className="mb-1 font-bold text-white">Services</div>
+        <div className="flex flex-col text-sm md:gap-2">
+          <div className="mb-1 mt-1 font-bold text-white md:mt-0">Services</div>
           {CATEGORIES.map((c) => (
-            <Link key={c.id} href="/services" className="transition-colors hover:text-gold">{c.name}</Link>
+            <Link key={c.id} href="/services" className={footLink}>{c.name}</Link>
           ))}
         </div>
-        <div className="flex flex-col gap-2 text-sm">
-          <div className="mb-1 font-bold text-white">Quick links</div>
-          <Link href="/rates" className="transition-colors hover:text-gold">Rates</Link>
-          <Link href="/stores" className="transition-colors hover:text-gold">Stores</Link>
-          <Link href="/about" className="transition-colors hover:text-gold">About us</Link>
-          <Link href="/franchise" className="transition-colors hover:text-gold">Franchise</Link>
-          <Link href="/track" className="transition-colors hover:text-gold">Track order</Link>
-          <Link href="/book" className="transition-colors hover:text-gold">Book a pickup</Link>
+        <div className="flex flex-col text-sm md:gap-2">
+          <div className="mb-1 mt-1 font-bold text-white md:mt-0">Quick links</div>
+          <Link href="/rates" className={footLink}>Rates</Link>
+          <Link href="/stores" className={footLink}>Stores</Link>
+          <Link href="/about" className={footLink}>About us</Link>
+          <Link href="/franchise" className={footLink}>Franchise</Link>
+          <Link href="/track" className={footLink}>Track order</Link>
+          <Link href="/book" className={footLink}>Book a pickup</Link>
         </div>
-        <div className="flex flex-col gap-2 text-sm">
-          <div className="mb-1 font-bold text-white">Contact</div>
+        <div className="flex flex-col text-sm md:gap-2">
+          <div className="mb-1 mt-1 font-bold text-white md:mt-0">Contact</div>
           <div>{BUSINESS.phone}</div>
           <div>{BUSINESS.email}</div>
           <div>{BUSINESS.address}</div>
           <div>{BUSINESS.hours}</div>
         </div>
       </div>
-      <div className="border-t border-white/10 py-5 pb-24 text-center text-xs md:pb-5">
+      <div className="border-t border-white/10 py-3 pb-24 text-center text-xs md:py-5 md:pb-5">
         © {new Date().getFullYear()} {BUSINESS.name} ·{" "}
-        <a href="https://thelaundryhouseindia.com/privacy-policy" target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:text-gold hover:underline">Privacy Policy</a> ·{" "}
-        <a href="https://thelaundryhouseindia.com/terms_and_condition" target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:text-gold hover:underline">Terms &amp; Conditions</a>
+        <a href="https://thelaundryhouseindia.com/privacy-policy" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center px-1 underline-offset-2 hover:text-gold hover:underline md:min-h-0 md:px-0">Privacy Policy</a> ·{" "}
+        <a href="https://thelaundryhouseindia.com/terms_and_condition" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center px-1 underline-offset-2 hover:text-gold hover:underline md:min-h-0 md:px-0">Terms &amp; Conditions</a>
       </div>
     </footer>
   );
