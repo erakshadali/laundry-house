@@ -33,7 +33,7 @@ export default function StoresPage() {
                   <div className="flex items-center gap-2 text-sm text-muted">
                     <Clock className="size-4 shrink-0" aria-hidden /> {s.hours}
                   </div>
-                  <a href={`tel:+91${s.phone}`} className="flex w-fit items-center gap-2 text-sm font-semibold hover:text-gold-deep">
+                  <a href={`tel:+91${s.phone}`} className="flex min-h-11 w-fit items-center gap-2 text-sm font-semibold hover:text-gold-deep md:min-h-0">
                     <Phone className="size-4 shrink-0" aria-hidden /> {s.phone}
                   </a>
                   <div className="mt-auto flex flex-wrap gap-2 pt-2">

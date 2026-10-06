@@ -407,7 +407,7 @@ export function BookingWizard({
             {prettyDate(date)}, {slotLabel}
           </div>
         )}
-        <a href={waLink("Hi! I need help with a booking.", BUSINESS.whatsapp)} target="_blank" rel="noopener noreferrer" className="text-center text-sm font-bold text-aqua underline">Need help? WhatsApp us</a>
+        <a href={waLink("Hi! I need help with a booking.", BUSINESS.whatsapp)} target="_blank" rel="noopener noreferrer" className="flex min-h-11 items-center justify-center text-center text-sm font-bold text-aqua underline">Need help? WhatsApp us</a>
       </aside>
     </div>
   );
