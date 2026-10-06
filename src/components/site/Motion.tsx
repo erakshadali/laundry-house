@@ -141,18 +141,18 @@ function toRows(list: Service[]): RateRow[] {
 function Adder({ qty, onAdd, onSub, label }: { qty: number; onAdd: () => void; onSub: () => void; label: string }) {
   if (qty === 0) {
     return (
-      <button onClick={onAdd} aria-label={`Add ${label}`} className="flex size-8 items-center justify-center rounded-full bg-gold text-night transition-transform active:scale-90">
+      <button onClick={onAdd} aria-label={`Add ${label}`} className="relative flex size-8 after:absolute after:-inset-1.5 after:content-[''] items-center justify-center rounded-full bg-gold text-night transition-transform active:scale-90">
         <Plus className="size-4" />
       </button>
     );
   }
   return (
     <span className="flex items-center gap-1">
-      <button onClick={onSub} aria-label={`Remove one ${label}`} className="flex size-7 items-center justify-center rounded-full border border-night text-night">
+      <button onClick={onSub} aria-label={`Remove one ${label}`} className="relative flex size-7 after:absolute after:-inset-2 after:content-[''] items-center justify-center rounded-full border border-night text-night">
         <Minus className="size-3.5" />
       </button>
       <span className="w-5 text-center text-sm font-extrabold" aria-live="polite">{qty}</span>
-      <button onClick={onAdd} aria-label={`Add one more ${label}`} className="flex size-7 items-center justify-center rounded-full bg-night text-white">
+      <button onClick={onAdd} aria-label={`Add one more ${label}`} className="relative flex size-7 after:absolute after:-inset-2 after:content-[''] items-center justify-center rounded-full bg-night text-white">
         <Plus className="size-3.5" />
       </button>
     </span>

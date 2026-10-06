@@ -227,20 +227,20 @@ export function BookingWizard({
                   {items.map((s) => {
                     const q = qty[s.id] ?? 0;
                     return (
-                      <div key={s.id} className={cn("flex items-center gap-3 rounded-2xl border p-4", q > 0 ? "border-aqua bg-[#F4EBD6]" : "border-line")}>
-                        <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-mint text-aqua-dark">
+                      <div key={s.id} className={cn("flex items-center gap-2.5 rounded-2xl border p-3 md:gap-3 md:p-4", q > 0 ? "border-aqua bg-[#F4EBD6]" : "border-line")}>
+                        <span className="hidden size-10 shrink-0 items-center justify-center sm:flex md:size-11 rounded-xl bg-mint text-aqua-dark">
                           <ServiceIcon name={s.category} className="size-6" />
                         </span>
                         <div className="min-w-0 flex-1">
                           <div className="text-[15px] font-bold leading-snug">{s.name}</div>
                           <div className="whitespace-nowrap text-sm text-muted">{formatINR(s.price)} / {s.unit}</div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <button aria-label={`Decrease ${s.name}`} onClick={() => setQty({ ...qty, [s.id]: Math.max(0, q - 1) })} className="flex size-9 items-center justify-center rounded-full border border-[#DDD3C2] bg-white disabled:opacity-40" disabled={q === 0}>
+                        <div className="flex shrink-0 items-center gap-1 md:gap-2">
+                          <button aria-label={`Decrease ${s.name}`} onClick={() => setQty({ ...qty, [s.id]: Math.max(0, q - 1) })} className="flex size-11 items-center justify-center md:size-9 rounded-full border border-[#DDD3C2] bg-white disabled:opacity-40" disabled={q === 0}>
                             <Minus className="size-4" />
                           </button>
                           <span className="w-6 text-center font-extrabold" aria-live="polite">{q}</span>
-                          <button aria-label={`Increase ${s.name}`} onClick={() => setQty({ ...qty, [s.id]: Math.min(100, q + 1) })} className="flex size-9 items-center justify-center rounded-full bg-ink text-white">
+                          <button aria-label={`Increase ${s.name}`} onClick={() => setQty({ ...qty, [s.id]: Math.min(100, q + 1) })} className="flex size-11 items-center justify-center md:size-9 rounded-full bg-ink text-white">
                             <Plus className="size-4" />
                           </button>
                         </div>
