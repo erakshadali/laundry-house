@@ -202,7 +202,7 @@ export function RateCard({ services, full = false, mobileRows }: { services: Ser
                 setQ("");
               }}
               className={cn(
-                "shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors md:px-5 md:py-2.5",
+                "min-h-11 shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors md:min-h-0 md:px-5 md:py-2.5",
                 !query && tab === c.id ? "bg-night text-white" : "bg-surface text-night hover:bg-line",
               )}
             >
