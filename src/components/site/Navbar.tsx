@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { MessageCircle, Menu, Phone, X } from "lucide-react";
@@ -20,7 +21,14 @@ const links = [
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
   const { scrollY } = useScroll();
+  // Close the menu whenever the page changes (links, back button, anything).
+  const [lastPath, setLastPath] = useState(pathname);
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
+    setOpen(false);
+  }
   useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 24));
 
   // While the mobile menu is open: lock page scroll and let Escape close it.
@@ -52,7 +60,7 @@ export function Navbar() {
         </div>
       </div>
       <motion.div className={`bg-white transition-shadow duration-300 ${scrolled ? "shadow-[0_6px_24px_rgba(15,42,92,0.10)]" : "border-b border-line"}`}>
-        <div className="mx-auto flex h-[72px] max-w-7xl items-center gap-8 px-5 md:px-8">
+        <div className="relative z-10 mx-auto flex h-[72px] bg-white max-w-7xl items-center gap-8 px-5 md:px-8">
           <Link href="/" className="flex flex-1 items-center gap-3 md:flex-none">
             <LogoMark />
             <span className="text-lg font-extrabold leading-none text-night md:text-xl">
@@ -77,7 +85,7 @@ export function Navbar() {
         {open && (
           <>
           {/* Backdrop: swallows taps so nothing underneath (floating buttons, bottom bar, page links) is triggered, and a tap outside closes the menu. */}
-          <div className="fixed inset-x-0 bottom-0 top-[72px] bg-night/40 lg:hidden" onClick={() => setOpen(false)} aria-hidden />
+          <div className="fixed inset-0 bg-night/40 lg:hidden" onClick={() => setOpen(false)} aria-hidden />
           <motion.nav initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="absolute inset-x-0 top-full flex max-h-[calc(100dvh-72px)] flex-col gap-1 overflow-y-auto border-t border-line bg-white px-5 pb-5 pt-3 shadow-xl lg:hidden" aria-label="Mobile">
             {links.map((l) => (
               <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="rounded-xl px-3 py-3 font-medium hover:bg-surface">
