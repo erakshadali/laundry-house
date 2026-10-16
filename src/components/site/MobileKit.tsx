@@ -122,7 +122,7 @@ export function ExploreTabs() {
                   <li key={s.id} className="flex items-center justify-between gap-3 py-2.5">
                     <div className="min-w-0">
                       <div className="text-sm font-bold">{s.name}</div>
-                      <div className="truncate text-xs text-muted">{s.address}</div>
+                      <div className="text-xs leading-snug text-muted">{s.address}</div>
                     </div>
                     <a href={`tel:+91${s.phone}`} aria-label={`Call ${s.name}`} className="flex size-9 shrink-0 items-center justify-center rounded-full bg-gold text-night">
                       <Phone className="size-4" aria-hidden />
