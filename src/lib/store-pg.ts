@@ -23,15 +23,15 @@ function ensureSchema(): Promise<void> {
       notes TEXT NOT NULL DEFAULT '', payment TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'scheduled', total INTEGER NOT NULL
     )`;
     await sql`CREATE INDEX IF NOT EXISTS orders_date_slot ON orders (date, slot_id)`;
-    const [{ n }] = (await sql`SELECT count(*)::int AS n FROM services`) as { n: number }[];
-    if (n === 0) {
-      const list = seedServices();
-      for (let i = 0; i < list.length; i++) {
-        const s = list[i];
-        await sql`INSERT INTO services (id, category, name, description, price, unit, active, pos)
-          VALUES (${s.id}, ${s.category}, ${s.name}, ${s.description}, ${s.price}, ${s.unit}, ${s.active}, ${i})
-          ON CONFLICT (id) DO NOTHING`;
-      }
+    // Insert any seed service that is missing (existing rows and admin edits are left alone).
+    const list = seedServices();
+    const have = new Set(((await sql`SELECT id FROM services`) as { id: string }[]).map((r) => r.id));
+    for (let i = 0; i < list.length; i++) {
+      const s = list[i];
+      if (have.has(s.id)) continue;
+      await sql`INSERT INTO services (id, category, name, description, price, unit, active, pos)
+        VALUES (${s.id}, ${s.category}, ${s.name}, ${s.description}, ${s.price}, ${s.unit}, ${s.active}, ${i})
+        ON CONFLICT (id) DO NOTHING`;
     }
   })().catch((e) => {
     ready = null;

@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { SLOTS, SLOT_CAPACITY } from "./config";
-import { seed } from "./seed";
+import { seed, seedServices } from "./seed";
 import type { DB, Order, OrderStatus, Service } from "./types";
 import type { NewOrderInput } from "./store-types";
 import { addDays, hourIST, todayIST } from "./utils";
@@ -13,7 +13,14 @@ let queue: Promise<unknown> = Promise.resolve();
 
 async function load(): Promise<DB> {
   try {
-    return JSON.parse(await fs.readFile(FILE, "utf8")) as DB;
+    const db = JSON.parse(await fs.readFile(FILE, "utf8")) as DB;
+    const have = new Set(db.services.map((s) => s.id));
+    const missing = seedServices().filter((s) => !have.has(s.id));
+    if (missing.length) {
+      db.services.push(...missing);
+      await save(db);
+    }
+    return db;
   } catch {
     const db = seed();
     await save(db);

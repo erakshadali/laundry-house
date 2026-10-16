@@ -26,7 +26,45 @@ const GARMENT_RATES: [string, number, number][] = [
   ["Dress (Long)", 350, 175],
   ["Overcoat / Long Coat", 400, 200],
 ];
-const COUTURE_RATES: [string, number, number][] = [["Wedding Dress (Bari)", 999, 399]];
+const COUTURE_RATES: [string, number, number][] = [
+  ["Wedding Dress (Bari)", 999, 399],
+  ["Bridal Lehenga", 1499, 599],
+  ["Wedding Gown", 1299, 499],
+  ["Sherwani", 799, 299],
+  ["Designer Saree", 499, 199],
+  ["Designer Dupatta", 299, 125],
+  ["Designer Blouse", 249, 100],
+  ["Suit / Tuxedo (2 piece)", 599, 249],
+];
+
+/** Placeholder starting prices (not from the client's rate card). Edit in Admin > Services. */
+const EXTRA_RATES: Record<string, [string, number][]> = {
+  sneakers: [
+    ["Sneakers / Casual Shoes", 399],
+    ["Sports / Running Shoes", 449],
+    ["Leather Shoes", 499],
+    ["Boots", 599],
+    ["Sandals / Slippers", 249],
+    ["Handbag (Fabric)", 499],
+    ["Handbag (Leather)", 799],
+    ["Backpack", 449],
+    ["Wallet / Belt", 249],
+    ["Luxury Bag Restoration", 1499],
+  ],
+  home: [
+    ["Curtain (per panel)", 199],
+    ["Sofa Cleaning (per seat)", 399],
+    ["Carpet (per sq ft)", 25],
+    ["Rug / Doormat", 299],
+    ["Blanket / Quilt (Single)", 299],
+    ["Blanket / Quilt (Double)", 399],
+    ["Bed Sheet (Double)", 150],
+    ["Pillow / Cushion Cover", 80],
+    ["Mattress Cleaning", 999],
+    ["Car Seat Cover (set)", 1499],
+    ["Car Interior Fabric Cleaning", 1999],
+  ],
+};
 
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
@@ -36,7 +74,18 @@ export function seedServices(): Service[] {
       { id: `${category}-${slug(name)}-dc`, category, name: `${name} (Dry clean)`, description: "Starting price, exclusive of GST.", price: dc, unit: "item" as const, active: true },
       { id: `${category}-${slug(name)}-sp`, category, name: `${name} (Steam press)`, description: "Finishing only, exclusive of GST.", price: sp, unit: "item" as const, active: true },
     ]);
-  return [...make("garment", GARMENT_RATES), ...make("couture", COUTURE_RATES)];
+  const extra: Service[] = Object.entries(EXTRA_RATES).flatMap(([category, rows]) =>
+    rows.map(([name, price]) => ({
+      id: `${category}-${slug(name)}`,
+      category,
+      name,
+      description: "Estimated starting price, exclusive of GST. Final price confirmed after inspection.",
+      price,
+      unit: "item" as const,
+      active: true,
+    })),
+  );
+  return [...make("garment", GARMENT_RATES), ...make("couture", COUTURE_RATES), ...extra];
 }
 /** Made-up orders so the local demo dashboard is not empty. Never used in production. */
 export function seed(): DB {
