@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { MessageCircle, Menu, Phone, X } from "lucide-react";
 import { BUSINESS } from "@/lib/config";
@@ -23,8 +23,21 @@ export function Navbar() {
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 24));
 
+  // While the mobile menu is open: lock page scroll and let Escape close it.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   return (
-    <header className="sticky top-0 z-50">
+    <header className="sticky top-0 z-[70]">
       <div className="hidden bg-night text-xs text-white md:block">
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-between px-8">
           <span className="text-white/80">Doorstep pickup &amp; delivery in Noida · {BUSINESS.hours}</span>
@@ -57,12 +70,15 @@ export function Navbar() {
           <Link href="/book" className="hidden rounded-xl bg-gold px-6 py-3 text-sm font-bold text-night shadow-sm transition-transform hover:scale-[1.03] md:block">
             Book Now
           </Link>
-          <button aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(!open)} className="flex size-11 items-center justify-center rounded-xl bg-surface text-night lg:hidden">
+          <button type="button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(!open)} className="flex size-11 items-center justify-center rounded-xl bg-surface text-night lg:hidden">
             {open ? <X /> : <Menu />}
           </button>
         </div>
         {open && (
-          <motion.nav initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-1 border-t border-line px-5 pb-5 pt-3 lg:hidden" aria-label="Mobile">
+          <>
+          {/* Backdrop: swallows taps so nothing underneath (floating buttons, bottom bar, page links) is triggered, and a tap outside closes the menu. */}
+          <div className="fixed inset-x-0 bottom-0 top-[72px] bg-night/40 lg:hidden" onClick={() => setOpen(false)} aria-hidden />
+          <motion.nav initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="absolute inset-x-0 top-full flex max-h-[calc(100dvh-72px)] flex-col gap-1 overflow-y-auto border-t border-line bg-white px-5 pb-5 pt-3 shadow-xl lg:hidden" aria-label="Mobile">
             {links.map((l) => (
               <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="rounded-xl px-3 py-3 font-medium hover:bg-surface">
                 {l.label}
@@ -72,6 +88,7 @@ export function Navbar() {
               Book Now
             </Link>
           </motion.nav>
+          </>
         )}
       </motion.div>
     </header>
