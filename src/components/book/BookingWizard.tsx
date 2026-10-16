@@ -36,9 +36,11 @@ export function BookingWizard({
 }: {
   services: Service[];
   dates: string[];
-  initial: { service?: string; city?: string; date?: string; slot?: string; items?: string };
+  initial: { service?: string; category?: string; city?: string; date?: string; slot?: string; items?: string };
 }) {
   const [step, setStep] = useState(0);
+  // ?category=id (from the home cards) shows only that section's items until "Show all" is tapped.
+  const [onlyCat, setOnlyCat] = useState<string | null>(() => (CATEGORIES.some((c) => c.id === initial.category) ? initial.category! : null));
   const [qty, setQty] = useState<Record<string, number>>(() => {
     // ?items=id:qty,id:qty comes from the rate calculator; ?service=id is a single item.
     const fromItems: Record<string, number> = {};
@@ -217,8 +219,13 @@ export function BookingWizard({
             {step === 0 && (
               <>
                 <Heading title="Choose your services" sub="Set the quantity. Weight is confirmed at pickup." />
+                {onlyCat && (
+                  <button onClick={() => setOnlyCat(null)} className="w-fit rounded-full border border-[#DDD3C2] bg-white px-4 py-2 text-sm font-bold text-night">
+                    Show all services
+                  </button>
+                )}
                 <div className="flex flex-col gap-6">
-                  {CATEGORIES.map((cat) => {
+                  {CATEGORIES.filter((cat) => !onlyCat || cat.id === onlyCat).map((cat) => {
                     const items = services.filter((s) => s.category === cat.id);
                     if (!items.length) return null;
                     return (

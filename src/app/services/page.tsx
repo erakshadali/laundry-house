@@ -55,7 +55,7 @@ export default async function ServicesPage() {
                             ))}
                           </ul>
                           <div className="mt-2 flex flex-wrap gap-3">
-                            <Link href={`/book?service=${items[0].id}`} className="rounded-xl bg-night px-7 py-3.5 font-bold text-white transition-transform hover:scale-[1.03]">
+                            <Link href={`/book?category=${c.id}`} className="rounded-xl bg-night px-7 py-3.5 font-bold text-white transition-transform hover:scale-[1.03]">
                               Book {c.name}
                             </Link>
                             {items.length > 6 && (

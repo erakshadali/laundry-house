@@ -51,7 +51,7 @@ export function ServiceCarousel() {
         <Head eyebrow="Our services" title="Everything your wardrobe needs" sub="Pick a service, choose a slot, and we take care of the rest." />
         <Carousel label="Services">
           {CATEGORIES.map((c) => (
-            <Link key={c.id} href={`/book`} className="group relative h-[270px] w-[74%] shrink-0 snap-start overflow-hidden rounded-2xl bg-surface shadow-md sm:w-[300px] md:aspect-[3/4] md:h-auto md:w-[320px] md:rounded-3xl">
+            <Link key={c.id} href={`/book?category=${c.id}`} className="group relative h-[270px] w-[74%] shrink-0 snap-start overflow-hidden rounded-2xl bg-surface shadow-md sm:w-[300px] md:aspect-[3/4] md:h-auto md:w-[320px] md:rounded-3xl">
               <Photo src={c.image} alt={c.caption} caption={c.caption} sizes="320px" position={c.pos} className="transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-night via-night/40 to-transparent" aria-hidden />
               <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1.5 p-4 text-white md:gap-2 md:p-6">
